@@ -1,0 +1,26 @@
+{
+  "name": "touchbase",
+  "description": "Command center for your personal and professional resources",
+  "version": "0.0.0",
+  "scripts": {
+    "dep-clean": "lerna clean && lerna exec 'shx rm package-lock.json || true'"
+  },
+  "private": true,
+  "license": "GPL-3.0",
+  "author": "TouchBase",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/UB-CSE/course-project-touchbase"
+  },
+  "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
+  "keywords": [],
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "shx": "^0.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
+    }
+  }
+}

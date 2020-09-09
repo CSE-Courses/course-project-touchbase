@@ -1,0 +1,98 @@
+{
+  "name": "@touchbase/core-backend",
+  "description": "Backend core for TouchBase",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ts-node src/",
+    "lint": "eslint src/. test/. --config .eslintrc.js --ext .ts",
+    "test": "npm run clean && npm run jest",
+    "typecheck": "tsc --noEmit",
+    "dev": "ts-node-dev --no-notify src/",
+    "jest": "jest  --forceExit",
+    "build": "shx rm -rf lib/ && tsc",
+    "clean": "shx --silent rm testdb.sqlite || true",
+    "precommit": "lint-staged"
+  },
+  "main": "src",
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "types": "lib/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "GPL-3.0",
+  "author": "TouchBase",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/UB-CSE/course-project-touchbase",
+    "directory": "packages/core/backend"
+  },
+  "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
+  "keywords": [
+    "feathers"
+  ],
+  "engines": {
+    "node": "^12.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "^4.5.8",
+    "@feathersjs/authentication-local": "^4.5.8",
+    "@feathersjs/authentication-oauth": "^4.5.8",
+    "@feathersjs/configuration": "^4.5.8",
+    "@feathersjs/errors": "^4.5.8",
+    "@feathersjs/express": "^4.5.8",
+    "@feathersjs/feathers": "^4.5.8",
+    "@feathersjs/socketio": "^4.5.8",
+    "@feathersjs/transport-commons": "^4.5.8",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "feathers-sequelize": "^6.2.0",
+    "helmet": "^4.1.0",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.3.5",
+    "sequelize-typescript": "^2.0.0-beta.0",
+    "serve-favicon": "^2.5.0",
+    "sqlite3": "^5.0.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@touchbase/eslint-config-typescript": "0.0.0",
+    "@types/compression": "^1.7.0",
+    "@types/cors": "^2.8.7",
+    "@types/helmet": "0.0.48",
+    "@types/jest": "^26.0.13",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/serve-favicon": "^2.5.0",
+    "@types/validator": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
+    "axios": "^0.20.0",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.4.2",
+    "lint-staged": "^10.3.0",
+    "prettier": "^2.1.1",
+    "shx": "^0.3.2",
+    "ts-jest": "^26.3.0",
+    "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.0.0-pre.62",
+    "typescript": "^4.0.2"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ],
+    "ignore": []
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": [
+      "npm run lint -- --fix"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "jsx": "preserve",
+    "types": [
+      "webpack-env",
+      "jest",
+      "vuetify"
+    ],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ]
+  }
+}

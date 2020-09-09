@@ -1,0 +1,30 @@
+{
+  "name": "@touchbase/eslint-config-vue",
+  "description": "TouchBase ESLint configuration for Vue+Typescript projects",
+  "version": "0.0.0",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "GPL-3.0",
+  "author": "TouchBase",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/UB-CSE/course-project-touchbase.git",
+    "directory": "packages/util/eslint-config-vue"
+  },
+  "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
+  "keywords": [],
+  "dependencies": {
+    "@touchbase/eslint-config-extra": "^0.0.0",
+    "@typescript-eslint/parser": "^4.1.0",
+    "@vue/cli-service": "~4.5.4",
+    "@vue/eslint-config-airbnb": "^5.1.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.1.0",
+    "typescript": "^4.0.2"
+  },
+  "peerDependencies": {
+    "eslint-plugin-vue": "^7.0.0-0"
+  }
+}
