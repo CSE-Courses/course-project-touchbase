@@ -11,19 +11,11 @@
         </v-tab>
       </v-tabs>
 
-      <v-btn to="/about" icon 
-          src="./assets/logo.svg">
-        <v-img
-          alt="TouchBase Logo"
-          class="shrink mr-2"
-          contain
-          src="./assets/logo.svg"
-          transition="scale-transition"
-          width="40"
-          absolute
-          right
-        />
-      </v-btn>
+      <router-link to="/about" icon src="./assets/logo.svg">
+        <v-avatar>
+          <img alt="TouchBase Logo" src="./assets/logo.svg" transition="scale-transition" />
+        </v-avatar>
+      </router-link>
     </v-app-bar>
 
     <v-navigation-drawer
