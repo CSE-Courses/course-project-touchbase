@@ -21,3 +21,14 @@ export default new Vuetify({
     },
   },
 });
+/*
+0b2228
+164450
+216778
+2c89a0
+37abc8
+5fbcd3
+87cdde
+afdde9
+d7eef4
+*/

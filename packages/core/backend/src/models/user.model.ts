@@ -1,7 +1,8 @@
-import { Table, Column, Model, AllowNull, Unique } from "sequelize-typescript";
+import {Table, Column, Model, AllowNull, Unique, HasMany} from "sequelize-typescript";
+import Collection from "./collections.model";
 
 @Table
-export default class User extends Model<User> {
+export default class User extends Model implements User {
   @Unique
   @AllowNull(false)
   @Column
@@ -13,4 +14,7 @@ export default class User extends Model<User> {
 
   @Column
   name?: string;
+
+  @HasMany(() => Collection)
+  collections?: Collection[];
 }
