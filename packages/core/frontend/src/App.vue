@@ -1,10 +1,8 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes[isDark].background }">
-
-    <TopBar></TopBar>
+        <TopBar></TopBar>
 
     <FileTree></FileTree>
-
     <v-main>
       <router-view />
     </v-main>
@@ -13,17 +11,14 @@
 
 <style scoped lang="scss"></style>
 
-<script>
-
-import TopBar from './components/TopBar.vue'
-import FileTree from './components/FileTree.vue'
-
+<script lang="ts">
+import TopBar from "./components/TopBar.vue";
+import FileTree from "./components/FileTree.vue";
 
 export default {
-  components: {TopBar, FileTree},
-  
+  components: { TopBar, FileTree },
   computed: {
-    isDark() {
+    isDark(): string {
       return this.$vuetify.theme.dark ? "dark" : "light";
     },
   },

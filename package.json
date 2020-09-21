@@ -15,6 +15,7 @@
   "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
   "keywords": [],
   "devDependencies": {
+    "@mdi/font": "^5.6.55",
     "husky": "^4.3.0",
     "shx": "^0.3.2"
   },
@@ -22,5 +23,8 @@
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
     }
+  },
+  "dependencies": {
+    "material-design-icons-iconfont": "^6.1.0"
   }
 }
