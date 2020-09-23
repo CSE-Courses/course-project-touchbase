@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" top persistent max-width="300">
       <template v-slot:activator="{ on, attrs }">
-        Primary Color: <v-btn color="primary" depressed rounded v-bind="attrs" v-on="on"></v-btn>
+        Primary Color: <v-btn color="primary" rounded v-bind="attrs" v-on="on"></v-btn>
       </template>
       <v-card>
         <v-color-picker

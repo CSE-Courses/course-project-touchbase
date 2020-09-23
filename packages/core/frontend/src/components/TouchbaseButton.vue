@@ -2,12 +2,12 @@
   <div>
     <v-dialog v-model="dialog" persistent fullscreen>
       <template v-slot:activator="{ on, attrs }">
-        <v-avatar rounded v-bind="attrs" v-on="on">
+        <v-avatar id="Logo" rounded v-bind="attrs" v-on="on">
           <v-img alt="TouchBase Logo" src="../assets/logo.svg" transition="scale-transition" />
         </v-avatar>
       </template>
       <v-app-bar color="primary">
-        <v-btn text icon color="background" @click="dialog = false">
+        <v-btn id="CloseSettings" text icon color="background" @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-app-bar>
