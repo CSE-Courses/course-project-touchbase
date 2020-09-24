@@ -1,6 +1,5 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes[isDark].background }">
-
     <TopBar></TopBar>
 
     <FileTree></FileTree>
@@ -14,18 +13,15 @@
 <style scoped lang="scss"></style>
 
 <script>
+import { Component, Vue } from "vue-property-decorator";
+import TopBar from "./components/TopBar.vue";
+import FileTree from "./components/FileTree.vue";
 
-import TopBar from './components/TopBar.vue'
-import FileTree from './components/FileTree.vue'
-
-
-export default {
-  components: {TopBar, FileTree},
-  
-  computed: {
-    isDark() {
-      return this.$vuetify.theme.dark ? "dark" : "light";
-    },
-  },
-};
+@Component({ components: { TopBar, FileTree } })
+export default class App extends Vue {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  get isDark() {
+    return this.$vuetify.theme.dark ? "dark" : "light";
+  }
+}
 </script>

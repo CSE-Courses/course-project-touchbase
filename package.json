@@ -16,6 +16,7 @@
   "keywords": [],
   "devDependencies": {
     "husky": "^4.3.0",
+    "lerna": "^3.22.1",
     "shx": "^0.3.2"
   },
   "husky": {
