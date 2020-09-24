@@ -1,0 +1,66 @@
+{
+    "name": "@touchbase/core-plugin",
+    "description": "Base plugin code for TouchBase",
+    "version": "0.0.0",
+    "scripts": {
+      "start": "ts-node src/",
+      "typecheck": "tsc --noEmit",
+      "lint": "eslint src/. test/. --config .eslintrc.js --ext .ts",
+      "test": "npm run jest",
+      "jest": "jest  --forceExit",
+      "precommit": "lint-staged"
+    },
+    "main": "src",
+    "directories": {
+      "lib": "src",
+      "test": "test",
+      "example": "example"
+    },
+    "types": "lib/",
+    "publishConfig": {
+      "access": "public"
+    },
+    "license": "GPL-3.0",
+    "author": "TouchBase",
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/UB-CSE/course-project-touchbase",
+      "directory": "packages/core/plugin"
+    },
+    "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
+    "keywords": [],
+    "engines": {
+      "node": "^12.0.0",
+      "npm": ">= 6.0.0"
+    },
+    "dependencies": {
+      "@feathersjs/feathers": "^4.5.8"
+    },
+    "devDependencies": {
+      "@touchbase/eslint-config-typescript": "0.0.0",
+      "@types/jest": "^26.0.13",
+      "@typescript-eslint/eslint-plugin": "^4.1.0",
+      "@typescript-eslint/parser": "^4.1.0",
+      "eslint": "^7.8.1",
+      "eslint-config-airbnb-base": "^14.2.0",
+      "eslint-plugin-import": "^2.22.0",
+      "eslint-plugin-prettier": "^3.1.4",
+      "jest": "^26.4.2",
+      "lint-staged": "^10.3.0",
+      "prettier": "^2.1.1",
+      "ts-jest": "^26.3.0",
+      "typescript": "^4.0.2"
+    },
+    "standard": {
+      "env": [
+        "jest"
+      ],
+      "ignore": []
+    },
+    "lint-staged": {
+      "*.{js,jsx,vue,ts,tsx}": [
+        "npm run lint -- --fix"
+      ]
+    }
+  }
+  
