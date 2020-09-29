@@ -22,19 +22,20 @@
 </template>
 
 <script>
-import feathers from '@feathersjs/feathers'
-import socketio from '@feathersjs/socketio-client'
-import io from 'socket.io-client'
-import auth from '@feathersjs/authentication-client'
+import feathers from "@feathersjs/feathers";
+import socketio from "@feathersjs/socketio-client";
+import io from "socket.io-client";
+import auth from "@feathersjs/authentication-client";
 
-const socket = io('http://localhost:3030');
+const socket = io("http://localhost:3030");
 const app = feathers();
 
 // Setup the transport (Rest, Socket, etc.) here
 app.configure(socketio(socket));
 
 // Available options are listed in the "Options" section
-app.configure(auth({
+app.configure(
+  auth({
     storageKey: "auth",
   })
 );
@@ -62,9 +63,7 @@ export default {
         .then(() => {
           this.loginSuccess = true;
         })
-        .catch((e) => {
-          // Show login page (potentially with `e.message`)
-          console.error("Authentication error", e);
+        .catch(() => {
           this.loginFail = true;
         });
     },

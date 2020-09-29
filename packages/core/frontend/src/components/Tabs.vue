@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-tabs background-color="primary">
-      <v-tab to="/" text outlined rounded>
+      <v-tab to="/app/" text outlined rounded>
         <span>Timeline</span>
       </v-tab>
 
-      <v-tab to="/calendar" text outlined rounded>
+      <v-tab to="/app/calendar" text outlined rounded>
         <span>Calendar</span>
       </v-tab>
     </v-tabs>
@@ -13,9 +13,8 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Vue, Component } from "vue-property-decorator";
 
-export default Vue.extend({
-  name: "Tabs",
-});
+@Component
+export default class Tabs extends Vue {}
 </script>
