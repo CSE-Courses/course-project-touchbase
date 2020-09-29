@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Vue, Component } from "vue-property-decorator";
 import Tabs from "./Tabs.vue";
 import TouchbaseButton from "./TouchbaseButton.vue";
 
-export default Vue.extend({
-  name: "TopBar",
+@Component({
   components: { Tabs, TouchbaseButton },
-});
+})
+export default class TopBar extends Vue {}
 </script>

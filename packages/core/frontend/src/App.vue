@@ -1,6 +1,6 @@
 <template>
-  <v-app :style="{ background: $vuetify.theme.themes[isDark].background }">
-        <TopBar></TopBar>
+  <v-app>
+    <TopBar></TopBar>
 
     <FileTree></FileTree>
     <v-main>
@@ -12,15 +12,14 @@
 <style scoped lang="scss"></style>
 
 <script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import TopBar from "./components/TopBar.vue";
 import FileTree from "./components/FileTree.vue";
 
-export default {
+@Component({
   components: { TopBar, FileTree },
-  computed: {
-    isDark(): string {
-      return this.$vuetify.theme.dark ? "dark" : "light";
-    },
-  },
+})
+export default class extends Vue {
+  
 };
 </script>

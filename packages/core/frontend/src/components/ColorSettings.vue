@@ -2,11 +2,12 @@
   <div>
     <v-dialog v-model="dialog" top persistent max-width="300">
       <template v-slot:activator="{ on, attrs }">
-        Primary Color: <v-btn color="primary" rounded v-bind="attrs" v-on="on"></v-btn>
+        Primary Color: <v-btn :color="color" rounded v-bind="attrs" v-on="on"></v-btn>
       </template>
       <v-card>
         <v-color-picker
           v-model="color"
+          :value="color"
           :show-swatches="swatch"
           :hide-canvas="swatch"
           :hide-inputs="swatch"
@@ -27,27 +28,25 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Vue, Component } from "vue-property-decorator";
 
-export default Vue.extend({
-  data() {
-    return {
-      swatch: false,
-      height: 500,
-      dialog: false,
-      color: "primary",
-    };
-  },
-  computed: {
-    showColor() {
-      return this.color;
-    },
-  },
-  methods: {
-    writeColor() {
-      this.dialog = false;
-      this.$vuetify.theme.themes.light.primary = this.color;
-    },
-  },
-});
+@Component
+export default class ColorSettings extends Vue {
+  swatch = false;
+
+  height = 500;
+
+  dialog = false;
+
+  color = this.$vuetify.theme.themes.light.primary;
+
+  showColor() {
+    return this.color;
+  }
+
+  writeColor() {
+    this.dialog = false;
+    this.$vuetify.theme.themes.light.primary = this.color;
+  }
+}
 </script>

@@ -12,17 +12,11 @@
 </template>
 
 <script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
 import ColorSettings from "./ColorSettings.vue";
 
-export default {
+@Component({
   components: { ColorSettings },
-  data(): { dialog: boolean; notifications: boolean; sound: boolean; widgets: boolean } {
-    return {
-      dialog: false,
-      notifications: false,
-      sound: true,
-      widgets: false,
-    };
-  },
-};
+})
+export default class SettingsMenu extends Vue {}
 </script>

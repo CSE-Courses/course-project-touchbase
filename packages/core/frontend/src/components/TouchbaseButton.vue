@@ -17,16 +17,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Vue, Component } from "vue-property-decorator";
 import SettingsMenu from "./SettingsMenu.vue";
 
-export default Vue.extend({
-  name: "TouchbaseButton",
+@Component({
   components: { SettingsMenu },
-  data() {
-    return {
-      dialog: false,
-    };
-  },
-});
+})
+export default class TouchbaseButton extends Vue {
+  dialog = false;
+}
 </script>
