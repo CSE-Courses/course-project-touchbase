@@ -5,7 +5,7 @@ const { authenticate } = authentication.hooks;
 
 export default {
   before: {
-    all: [], //authentication goes here
+    all: [], // authorization goes here
     find: [],
     get: [],
     create: [],
