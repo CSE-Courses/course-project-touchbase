@@ -15,13 +15,13 @@ def start():
         browser.close()
         return False
     browser.find_element_by_id("Logo").click()
-    element_present=EC.presence_of_element_located((By.ID, "CloseSettings"))
+    element_present=EC.presence_of_element_located((By.ID, "ColorSettings"))
     time.sleep(1)
     WebDriverWait(browser, 3).until(element_present)
     print("Settings menu loaded")
-    browser.find_element_by_id("CloseSettings").click()
+    browser.find_element_by_id("Logo").click()
     time.sleep(2)
-    if browser.find_element_by_css_selector(".mdi-close").is_displayed():
+    if browser.find_element_by_id("ColorSettings").is_displayed():
         print("Menu failed to close")
         browser.close()
         return False

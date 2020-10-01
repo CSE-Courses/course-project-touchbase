@@ -9,12 +9,13 @@
           <v-alert v-if="loginFail" type="error"
             >Account login has failed! Please check your login credentials.</v-alert
           >
-          <v-text-field v-model="email" label="E-mail" required></v-text-field>
+          <v-text-field id="email" v-model="email" label="E-mail" required></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-text-field
+            id="password"
             v-model="password"
             label="Password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -26,7 +27,7 @@
       </v-row>
     </v-container>
     <v-col>
-      <v-btn depressed color="secondary" @click="submit">Login</v-btn>
+      <v-btn id="login" depressed color="secondary" @click="submit">Login</v-btn>
     </v-col>
   </v-form>
 </template>

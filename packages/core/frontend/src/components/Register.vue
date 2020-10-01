@@ -9,12 +9,13 @@
           <v-alert v-if="registerFail" type="error"
             >Account creation has failed! Please contact an administrator for assistance.</v-alert
           >
-          <v-text-field v-model="email" label="E-mail" required></v-text-field>
+          <v-text-field id="email" v-model="email" label="E-mail" required></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-text-field
+            id="password"
             v-model="password"
             label="Password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -28,7 +29,7 @@
       </v-row>
     </v-container>
     <v-col>
-      <v-btn depressed color="secondary" @click="submit">Register</v-btn>
+      <v-btn id="register" depressed color="secondary" @click="submit">Register</v-btn>
     </v-col>
   </v-form>
 </template>

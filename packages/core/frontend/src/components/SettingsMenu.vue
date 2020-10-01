@@ -2,11 +2,11 @@
   <v-card>
     <v-expansion-panels accordion multiple focusable hover>
       <v-expansion-panel>
-        <v-expansion-panel-header>Account Settings</v-expansion-panel-header>
+        <v-expansion-panel-header id="AccountSettings">Account Settings</v-expansion-panel-header>
         <v-expansion-panel-content> TODO </v-expansion-panel-content>
       </v-expansion-panel>
       <v-expansion-panel>
-        <v-expansion-panel-header>Color Settings</v-expansion-panel-header>
+        <v-expansion-panel-header id="ColorSettings">Color Settings</v-expansion-panel-header>
         <v-expansion-panel-content>
           <ColorSettings></ColorSettings>
         </v-expansion-panel-content>
