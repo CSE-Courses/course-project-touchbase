@@ -3,6 +3,7 @@
   "description": "Command center for your personal and professional resources",
   "version": "0.0.0",
   "scripts": {
+    "start": "npx lerna run start --scope @touchbase/core-frontend --scope @touchbase/core-backend --stream",
     "dep-clean": "lerna clean && lerna exec 'shx rm package-lock.json || true'"
   },
   "private": true,
@@ -16,11 +17,15 @@
   "keywords": [],
   "devDependencies": {
     "husky": "^4.3.0",
+    "lerna": "^3.22.1",
     "shx": "^0.3.2"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
     }
+  },
+  "dependencies": {
+    "material-design-icons-iconfont": "^6.1.0"
   }
 }

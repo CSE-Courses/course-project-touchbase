@@ -1,7 +1,11 @@
-import { Table, Column, Model, AllowNull, Unique } from "sequelize-typescript";
+import { Table, Column, Model, AllowNull, Unique, HasMany } from "sequelize-typescript";
+// eslint-disable-next-line import/no-cycle
+import Collection from "./collection.model";
+// eslint-disable-next-line import/no-cycle
+import Resource from "./resource.model";
 
 @Table
-export default class User extends Model<User> {
+export default class User extends Model implements User {
   @Unique
   @AllowNull(false)
   @Column
@@ -13,4 +17,10 @@ export default class User extends Model<User> {
 
   @Column
   name?: string;
+
+  @HasMany(() => Collection)
+  collections?: Collection[];
+
+  @HasMany(() => Resource)
+  resources?: Resource[];
 }
