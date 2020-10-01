@@ -1,4 +1,14 @@
-import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  AllowNull,
+  ForeignKey,
+  BelongsTo,
+  HasMany,
+} from "sequelize-typescript";
+// eslint-disable-next-line import/no-cycle
+import Resource from "./resource.model";
 // eslint-disable-next-line import/no-cycle
 import User from "./user.model";
 
@@ -15,4 +25,7 @@ export default class Collection extends Model implements Collection {
 
   @BelongsTo(() => User)
   owner!: User;
+
+  @HasMany(() => Resource)
+  resources?: Resource[];
 }

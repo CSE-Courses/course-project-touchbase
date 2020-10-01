@@ -49,10 +49,6 @@ describe("'users' service", () => {
       authentication: { strategy: "jwt", accessToken },
     });
 
-    if (Array.isArray(res)) {
-      expect(res[0].email).toBeDefined();
-    } else {
-      fail("Pagination was disabled, but we didn't get an array");
-    }
+    expect(res[0].email).toBeDefined();
   });
 });
