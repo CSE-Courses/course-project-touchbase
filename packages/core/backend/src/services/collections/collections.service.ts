@@ -1,18 +1,18 @@
 // Initializes the `collections` service on path `/collections`
 import { ServiceAddons } from "@feathersjs/feathers";
 import { Application } from "../../declarations";
-import { Collections } from "./collections.class";
+import Collections from "./collections.class";
 import Collection from "../../models/collections.model";
 import hooks from "./collections.hooks";
 
 // Add this service to the service type index
 declare module "../../declarations" {
   interface ServiceTypes {
-    collections: Collections & ServiceAddons<any>;
+    collections: Collections & ServiceAddons<Collection>;
   }
 }
 
-export default function (app: Application): void {
+export default function configureCollections(app: Application): void {
   const options = {
     Model: Collection,
     paginate: app.get("paginate"),

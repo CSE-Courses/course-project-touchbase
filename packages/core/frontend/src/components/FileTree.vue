@@ -10,64 +10,49 @@
       open-on-click
       activatable
     >
-      <v-treeview :items="items" dense activatable hoverable> </v-treeview>
+      <v-treeview :items="items.data" dense activatable hoverable> </v-treeview>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import io from "socket.io-client";
+import feathers from "@feathersjs/feathers";
+import socketio from "@feathersjs/socketio-client";
 
-export default Vue.extend({
-  name: "FileTree",
+const socket = io("http://localhost:3030");
+const client = feathers();
+client.configure(socketio(socket));
+const collectionsService = client.service("collections");
+const userService = client.service("users");
 
-  data: () => ({
-    items: [
-      {
-        id: 1,
-        name: "home@gmail.com",
-        children: [
-          { id: 2, name: "Calendar : app" },
-          { id: 3, name: "Chrome : app" },
-          { id: 4, name: "Webstorm : app" },
-        ],
+@Component
+export default class FileTree extends Vue {
+  items: { data: [] } = { data: [] };
+  // search by owner when authorization is implemented by @Krivokrysenko
+
+  async pullItems(): Promise<void> {
+    const user = await userService.find({
+      query: {
+        email: "ruslanab@buffalo.edu", // replace with authorized user
       },
-      {
-        id: 5,
-        name: "work@business.com",
-        children: [
-          {
-            id: 6,
-            name: "vuetify :",
-            children: [
-              {
-                id: 7,
-                name: "src :",
-                children: [
-                  { id: 8, name: "index : ts" },
-                  { id: 9, name: "bootstrap : ts" },
-                ],
-              },
-            ],
-          },
-          {
-            id: 10,
-            name: "material2 :",
-            children: [
-              {
-                id: 11,
-                name: "src :",
-                children: [
-                  { id: 12, name: "v-btn : ts" },
-                  { id: 13, name: "v-card : ts" },
-                  { id: 14, name: "v-window : ts" },
-                ],
-              },
-            ],
-          },
-        ],
+    });
+    collectionsService.create({
+      // create sample collection just for testing purposes
+      name: "sample",
+      owner: user.data[0],
+      ownerID: user.data[0].id,
+    });
+    this.items = await collectionsService.find({
+      query: {
+        ownerID: user.data[0].id,
       },
-    ],
-  }),
-});
+    });
+  }
+
+  mounted(): void {
+    this.pullItems();
+  }
+}
 </script>

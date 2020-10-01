@@ -1,4 +1,5 @@
-import {Table, Column, Model, AllowNull, Unique, HasMany} from "sequelize-typescript";
+import { Table, Column, Model, AllowNull, Unique, HasMany } from "sequelize-typescript";
+// eslint-disable-next-line import/no-cycle
 import Collection from "./collections.model";
 
 @Table
