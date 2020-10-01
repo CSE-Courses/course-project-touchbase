@@ -20,10 +20,10 @@ def start():
   # assert(browser.find_element_by_class_name("success").is_displayed()), "Registration success alert failed to display."
 
   browser.get("http://localhost:8080/register")
-  element_present = EC.presence_of_element_located((By.ID, "input-30"))
+  element_present = EC.presence_of_element_located((By.ID, "input-33"))
   WebDriverWait(browser, 3).until(element_present)
-  browser.find_element_by_id("input-30").send_keys("ruslanab@buffalo.edu")
-  browser.find_element_by_id("input-33").send_keys("1234")
+  browser.find_element_by_id("input-33").send_keys("ruslanab@buffalo.edu")
+  browser.find_element_by_id("input-36").send_keys("1234")
   browser.find_element_by_class_name("v-btn__content").click()
   assert (browser.find_element_by_class_name(
     "error").is_displayed()), "Registration failure alert failed to display."
