@@ -2,22 +2,34 @@
   <v-form ref="form">
     <v-container>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col>
+          <v-alert v-if="registerSuccess" type="success"
+            >Your account has been created successfully!</v-alert
+          >
+          <v-alert v-if="registerFail" type="error"
+            >Account creation has failed! Please contact an administrator for assistance.</v-alert
+          >
           <v-text-field v-model="email" label="E-mail" required></v-text-field>
         </v-col>
-
-        <v-col cols="12" md="6">
-          <v-text-field v-model="password" label="Password" required></v-text-field>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-text-field
+            v-model="password"
+            label="Password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show1 ? 'text' : 'password'"
+            hint="At least 8 characters"
+            counter
+            required
+            @click:append="show1 = !show1"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-container>
-    <v-btn @click="submit">Register</v-btn>
-    <v-alert v-if="registerSuccess" type="success"
-      >Your account has been created successfully!</v-alert
-    >
-    <v-alert v-if="registerFail" type="error"
-      >Account creation has failed! Please contact an administrator for assistance.</v-alert
-    >
+    <v-col>
+      <v-btn depressed color="secondary" @click="submit">Register</v-btn>
+    </v-col>
   </v-form>
 </template>
 
@@ -33,6 +45,7 @@ export default {
       password: "",
       registerSuccess: false,
       registerFail: false,
+      show1: false,
     };
   },
   methods: {
@@ -47,6 +60,7 @@ export default {
         })
         .then(function res() {
           vm.registerSuccess = true;
+          vm.registerFail = false;
         })
         .catch(function res() {
           vm.registerFail = true;
@@ -55,5 +69,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

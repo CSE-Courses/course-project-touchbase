@@ -16,16 +16,6 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ "../views/Calendar.vue"),
   },
-  {
-    path: "/register",
-    name: "Registration",
-    component: () => import(/* webpackChunkName: "registration" */ "../views/Register.vue"),
-  },
-  {
-    path: "/login",
-    name: "Authentication",
-    component: () => import(/* webpackChunkName "authentication" */ "../views/Login.vue"),
-  },
 ];
 
 const router = new VueRouter({

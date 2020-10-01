@@ -1,27 +1,26 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" persistent fullscreen>
+    <v-menu :close-on-content-click="dialog" offset-y="50">
       <template v-slot:activator="{ on, attrs }">
         <v-avatar id="Logo" rounded v-bind="attrs" v-on="on">
           <v-img alt="TouchBase Logo" src="../assets/logo.svg" transition="scale-transition" />
         </v-avatar>
       </template>
-      <v-app-bar color="primary">
-        <v-btn id="CloseSettings" text icon color="background" @click="dialog = false">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-app-bar>
-      <SettingsMenu></SettingsMenu>
-    </v-dialog>
+      <v-card min-width="250">
+        <AccountPopup></AccountPopup>
+        <SettingsMenu></SettingsMenu>
+      </v-card>
+    </v-menu>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import SettingsMenu from "./SettingsMenu.vue";
+import AccountPopup from "./AccountPopup.vue";
 
 @Component({
-  components: { SettingsMenu },
+  components: { AccountPopup, SettingsMenu },
 })
 export default class TouchbaseButton extends Vue {
   dialog = false;

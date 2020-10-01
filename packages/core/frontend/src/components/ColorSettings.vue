@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import { VuetifyParsedThemeItem } from "vuetify/types/services/theme.d";
 
 @Component
 export default class ColorSettings extends Vue {
@@ -40,11 +41,11 @@ export default class ColorSettings extends Vue {
 
   color = this.$vuetify.theme.themes.light.primary;
 
-  showColor() {
+  showColor(): Partial<VuetifyParsedThemeItem> | string | number | undefined {
     return this.color;
   }
 
-  writeColor() {
+  writeColor(): void {
     this.dialog = false;
     this.$vuetify.theme.themes.light.primary = this.color;
   }
