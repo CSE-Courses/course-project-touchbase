@@ -20,12 +20,18 @@ import { Vue, Component } from "vue-property-decorator";
 import io from "socket.io-client";
 import feathers from "@feathersjs/feathers";
 import socketio from "@feathersjs/socketio-client";
+import auth from "@feathersjs/authentication-client";
 
 const socket = io("http://localhost:3030");
 const client = feathers();
 client.configure(socketio(socket));
 const collectionsService = client.service("collections");
 const userService = client.service("users");
+client.configure(
+  auth({
+    storageKey: "auth",
+  })
+);
 
 @Component
 export default class FileTree extends Vue {
@@ -33,6 +39,7 @@ export default class FileTree extends Vue {
   // search by owner when authorization is implemented by @Krivokrysenko
 
   async pullItems(): Promise<void> {
+    await client.reAuthenticate();
     const user = await userService.find({
       query: {
         email: "ruslanab@buffalo.edu", // replace with authorized user

@@ -40,7 +40,13 @@ export function checkForUserObjectUnlessItsFind(context: HookContext) {
 
 // undefineds are fun
 export function checkForUserObjectSpecificallyForFind(context: HookContext) {
-  context.result = context.result.filter(
-    (collection: { ownerID: any }) => collection.ownerID === context.params.user.id
-  );
+  if (context.result.data) {
+    context.result.data = context.result.data.filter(
+      (collection: { ownerID: any }) => collection.ownerID === context.params.user.id
+    );
+  } else {
+    context.result = context.result.filter(
+      (collection: { ownerID: any }) => collection.ownerID === context.params.user.id
+    );
+  }
 }

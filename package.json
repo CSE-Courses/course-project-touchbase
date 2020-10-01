@@ -3,6 +3,7 @@
   "description": "Command center for your personal and professional resources",
   "version": "0.0.0",
   "scripts": {
+    "start": "npx lerna run start --scope @touchbase/core-frontend --scope @touchbase/core-backend --stream",
     "dep-clean": "lerna clean && lerna exec 'shx rm package-lock.json || true'"
   },
   "private": true,
