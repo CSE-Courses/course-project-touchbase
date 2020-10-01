@@ -1,33 +1,11 @@
-import { HookContext } from "@feathersjs/feathers";
 import * as feathersAuthentication from "@feathersjs/authentication";
-import { AuthenticateHookSettings } from "@feathersjs/authentication/lib/hooks/authenticate";
 import * as local from "@feathersjs/authentication-local";
+// eslint-disable-next-line import/named
+import { authenticateDontBlock, protectAuthenticated } from "../../utils/authHooks";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
 const { hashPassword, protect } = local.hooks;
-
-// Omit a field when the user is not authenticated
-const protectAuthenticated = (...fields: string[]) => (context: HookContext) => {
-  if (!context.params.authenticated) {
-    return protect(...fields)(context);
-  }
-
-  return context;
-};
-
-const authenticateDontBlock = (
-  originalSettings: string | AuthenticateHookSettings,
-  ...originalStrategies: string[]
-) => {
-  return async (context: HookContext) => {
-    try {
-      await authenticate(originalSettings, ...originalStrategies)(context);
-    } catch {
-      context.params.authenticated = false;
-    }
-  };
-};
 
 export default {
   before: {
