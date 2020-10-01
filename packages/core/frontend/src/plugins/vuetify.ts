@@ -1,18 +1,31 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
+    dark: false,
     options: {
       customProperties: true,
     },
     themes: {
       light: {
-        primary: "#ee44aa",
-        secondary: "#424242",
-        accent: "#82B1FF",
+        background: "#d7eef4",
+        primary: "#164450",
+        secondary: "#87cdde",
+        accent: "#afdde9",
+        error: "#FF5252",
+        info: "#2196F3",
+        success: "#4CAF50",
+        warning: "#FFC107",
+      },
+      dark: {
+        background: "#0b2228",
+        primary: "#164450",
+        secondary: "#216778",
+        accent: "#2c89a0",
         error: "#FF5252",
         info: "#2196F3",
         success: "#4CAF50",

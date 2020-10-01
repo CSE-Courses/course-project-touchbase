@@ -33,8 +33,6 @@ export const protectAuthenticated = (...fields: string[]) => (context: HookConte
 
 // Checks in collections, etc that User calling for Collection is Owner
 export function checkForUserObjectUnlessItsFind(context: HookContext) {
-  console.log(context.result);
-  console.log(context);
   if (!(context.result.ownerID === context.params.user.id)) {
     throw new NotAuthenticated();
   }
