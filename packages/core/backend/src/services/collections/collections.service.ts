@@ -24,5 +24,7 @@ export default function configureCollections(app: Application): void {
   // Get our initialized service so that we can register hooks
   const service = app.service("collections");
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   service.hooks(hooks);
 }

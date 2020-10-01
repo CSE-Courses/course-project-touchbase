@@ -15,7 +15,6 @@
   "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
   "keywords": [],
   "devDependencies": {
-    "@mdi/font": "^5.6.55",
     "husky": "^4.3.0",
     "lerna": "^3.22.1",
     "shx": "^0.3.2"
