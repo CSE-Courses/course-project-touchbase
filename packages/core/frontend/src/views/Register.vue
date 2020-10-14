@@ -42,6 +42,7 @@
 
 <script>
 import axios from "axios";
+import router from "@/router";
 
 export default {
   name: "Register",
@@ -68,6 +69,7 @@ export default {
         .then(function res() {
           vm.registerSuccess = true;
           vm.registerFail = false;
+          router.go("/login");
         })
         .catch(function res() {
           vm.registerFail = true;

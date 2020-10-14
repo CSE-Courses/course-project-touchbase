@@ -42,6 +42,7 @@ import feathers from "@feathersjs/feathers";
 import socketio from "@feathersjs/socketio-client";
 import io from "socket.io-client";
 import auth from "@feathersjs/authentication-client";
+import router from "@/router";
 
 const socket = io("http://localhost:3030");
 const app = feathers();
@@ -80,6 +81,7 @@ export default {
         .then(() => {
           this.loginSuccess = true;
           this.loginFail = false;
+          router.go("/app");
         })
         .catch(() => {
           this.loginFail = true;

@@ -59,12 +59,14 @@ export default router;
 router.beforeEach((to, from, next) => {
   const publicPages = ["/login", "/register"];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("user");
+  const loggedIn = localStorage.getItem("auth");
 
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {
     next("/login");
+  } else if (!authRequired && loggedIn){
+    next("/app");
   } else {
     next();
   }
