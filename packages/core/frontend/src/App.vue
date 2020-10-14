@@ -4,6 +4,7 @@
 
     <FileTree></FileTree>
     <v-main>
+      <AddButton></AddButton>
       <router-view />
     </v-main>
   </v-app>
@@ -15,9 +16,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import TopBar from "./components/TopBar.vue";
 import FileTree from "./components/FileTree.vue";
+import AddButton from "./components/AddButton.vue";
 
 @Component({
-  components: { TopBar, FileTree },
+  components: { TopBar, FileTree, AddButton },
 })
 export default class extends Vue {}
 </script>
