@@ -4,22 +4,12 @@ describe("'resources' service", () => {
   let userID = -1;
   let collectionID = -1;
 
-  beforeAll(async () => {
-    try {
-      const user = await app.service("users").create({
-        email: "someone@example.com",
-        password: "supersecret",
-      });
-      userID = user.id;
-    } catch (error) {
-      const res = await app.service("users").find({
-        query: {
-          email: "someone@example.com",
-        },
-        paginate: false,
-      });
-      userID = res[0].id;
-    }
+  beforeEach(async () => {
+    const user = await app.service("users").create({
+      email: "someone@example.com",
+      password: "supersecret",
+    });
+    userID = user.id;
 
     const collection = await app.service("collections").create({
       name: "All my thingamabobs",
