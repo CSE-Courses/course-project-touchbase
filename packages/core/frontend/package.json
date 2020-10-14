@@ -4,11 +4,11 @@
   "description": "Frontend core for TouchBase",
   "author": "TouchBase",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service serve",
+    "build": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint",
+    "test:e2e": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service test:e2e",
+    "lint": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service lint",
     "precommit": "lint-staged",
     "start": "npm run serve",
     "test": "npm run test:unit && npm run test:e2e -- --headless"
@@ -50,6 +50,7 @@
     "@vue/eslint-config-typescript": "^5.1.0",
     "@vue/test-utils": "^1.1.0",
     "chromedriver": "^84.0.1",
+    "cross-env": "^7.0.2",
     "eslint": "^7.8.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",

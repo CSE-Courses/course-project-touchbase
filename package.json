@@ -3,8 +3,16 @@
   "description": "Command center for your personal and professional resources",
   "version": "0.0.0",
   "scripts": {
-    "start": "npx lerna run start --scope @touchbase/core-frontend --scope @touchbase/core-backend --stream",
-    "dep-clean": "lerna clean && lerna exec 'shx rm package-lock.json || true'"
+    "start": "concurrently --kill-others -n ui,api -c green,blue \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "test": "lerna run test --stream",
+    "lint": "lerna run lint --stream",
+    "lint-fix": "lerna run lint --stream -- -- --fix",
+    "check-updates": "npx lerna exec \"npx npm-check-updates\"",
+    "postinstall": "lerna bootstrap",
+    "dev:frontend": "npm start --prefix ./packages/core/frontend",
+    "dev:backend": "npm run dev --prefix ./packages/core/backend",
+    "dep-clean": "lerna clean && shx rm -r node_modules",
+    "dep-clean-hard": "lerna clean && lerna exec 'shx --silent rm package-lock.json || true' && shx --silent rm package-lock.json && shx rm -r node_modules"
   },
   "private": true,
   "license": "GPL-3.0",
@@ -16,6 +24,7 @@
   "homepage": "https://github.com/UB-CSE/course-project-touchbase#readme",
   "keywords": [],
   "devDependencies": {
+    "concurrently": "^5.3.0",
     "husky": "^4.3.0",
     "lerna": "^3.22.1",
     "shx": "^0.3.2"
@@ -24,8 +33,5 @@
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
     }
-  },
-  "dependencies": {
-    "material-design-icons-iconfont": "^6.1.0"
   }
 }
