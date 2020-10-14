@@ -1,5 +1,5 @@
 <template>
-  <v-dialog max-width="400" value="true">
+  <v-dialog max-width="400" value="true" persistent>
     <v-card>
       <v-form ref="form">
         <v-container>
@@ -81,7 +81,7 @@ export default {
         .then(() => {
           this.loginSuccess = true;
           this.loginFail = false;
-          router.go("/app");
+          router.push("/app");
         })
         .catch(() => {
           this.loginFail = true;

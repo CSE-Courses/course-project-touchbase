@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import SettingsMenu from "./SettingsMenu.vue";
-import AccountPopup from "./AccountPopup.vue";
+import AccountPopup from "./AccountInfo.vue";
 
 @Component({
   components: { AccountPopup, SettingsMenu },

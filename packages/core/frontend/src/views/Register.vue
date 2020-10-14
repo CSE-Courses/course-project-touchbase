@@ -1,5 +1,5 @@
 <template>
-  <v-dialog max-width="400" value="true">
+  <v-dialog max-width="400" value="true" persistent>
     <v-card>
       <v-form ref="form">
         <v-container>
@@ -69,7 +69,7 @@ export default {
         .then(function res() {
           vm.registerSuccess = true;
           vm.registerFail = false;
-          router.go("/login");
+          router.push("/login");
         })
         .catch(function res() {
           vm.registerFail = true;
