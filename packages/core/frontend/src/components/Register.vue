@@ -61,6 +61,12 @@ export default class Register extends Vue {
 
       this.registerSuccess = true;
       this.registerFail = false;
+
+      await api.authenticate({
+        strategy: "local",
+        email: this.email,
+        password: this.password,
+      });
     } catch (e) {
       // TODO: Display the error
       this.registerFail = true;
