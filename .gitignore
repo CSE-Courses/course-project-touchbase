@@ -1,6 +1,6 @@
 # Development dbs
 devdb.sqlite
-testdb.sqlite
+testdb-*.sqlite
 
 # Logs
 logs
