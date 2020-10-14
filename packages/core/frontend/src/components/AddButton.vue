@@ -23,14 +23,8 @@
     </v-speed-dial>
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
-        <v-alert v-if="collectionSuccess" type="success"
-          >Your collection has been created successfully!</v-alert
-        >
-        <v-alert v-if="collectionFail" type="error"
-          >Collection creation has failed! Please make sure you are logged in.</v-alert
-        >
         <v-card-text>
-          <v-text-field id="collectionName" label="Collection name" required></v-text-field>
+          <v-text-field v-model="collectionName" label="Collection name" required></v-text-field>
         </v-card-text>
 
         <v-card-actions>
@@ -45,6 +39,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+// eslint-disable-next-line import/extensions,import/no-unresolved
+import api from "../api";
+
+const collectionsService = api.service("collections");
 
 @Component({
   components: {},
@@ -54,16 +52,14 @@ export default class AddButton extends Vue {
 
   dialog = false;
 
-  collectionSuccess = false;
-
-  collectionFail = false;
-
   collectionName = "";
 
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/explicit-module-boundary-types
-  submit() {
-    // eslint-disable-next-line no-console
-    console.log("Hi");
+  async submit() {
+    await collectionsService.create({
+      // create sample collection just for testing purposes
+      name: this.collectionName,
+    });
   }
 }
 </script>

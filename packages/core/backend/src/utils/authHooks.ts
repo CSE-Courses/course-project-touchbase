@@ -50,3 +50,10 @@ export function checkForUserObjectSpecificallyForFind(context: HookContext) {
     );
   }
 }
+
+// Name explains it
+export function attachUserToIncomingCollectionCreation(context: HookContext) {
+  if (context.params.provider != null) {
+    context.data.ownerID = context.params.user.id;
+  }
+}

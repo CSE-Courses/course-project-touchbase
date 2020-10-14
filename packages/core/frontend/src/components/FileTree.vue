@@ -17,9 +17,9 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+// eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "../api";
 
-const usersService = api.service("users");
 const collectionsService = api.service("collections");
 
 @Component
@@ -28,18 +28,6 @@ export default class FileTree extends Vue {
 
   async pullItems(): Promise<void> {
     const authRes = await api.reAuthenticate();
-
-    const user = await usersService.find({
-      query: {
-        email: "ruslanab@buffalo.edu", // replace with authorized user
-      },
-    });
-
-    await collectionsService.create({
-      // create sample collection just for testing purposes
-      name: "sample",
-      ownerID: authRes.user.id,
-    });
 
     this.items = await collectionsService.find({
       query: {

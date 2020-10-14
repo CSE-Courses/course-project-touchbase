@@ -1,8 +1,8 @@
 import * as feathersAuthentication from "@feathersjs/authentication";
-// eslint-disable-next-line import/named
 import {
   checkForUserObjectSpecificallyForFind,
   checkForUserObjectUnlessItsFind,
+  attachUserToIncomingCollectionCreation,
 } from "../../utils/authHooks";
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -13,7 +13,7 @@ export default {
     all: [authenticate("jwt")],
     find: [], // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     get: [],
-    create: [],
+    create: [attachUserToIncomingCollectionCreation],
     update: [],
     patch: [],
     remove: [],
