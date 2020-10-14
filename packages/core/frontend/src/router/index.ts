@@ -1,5 +1,9 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+import feathers from "@feathersjs/feathers";
+import socketio from "@feathersjs/socketio-client";
+import io from "socket.io-client";
+import auth from "@feathersjs/authentication-client";
 
 Vue.use(VueRouter);
 
@@ -9,12 +13,38 @@ const routes: Array<RouteConfig> = [
     redirect: "/app",
   },
   {
-    path: "/app/calendar",
-    name: "Calendar",
+    path: "/app/",
+    name: "Workspace",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/Calendar.vue"),
+    component: () => import(/* webpackChunkName: "Workspace" */ "../views/Workspace.vue"),
+    children: [
+      {
+        path: "/app/calendar",
+        name: "Calendar",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "Calendar" */ "../views/Calendar.vue"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
   },
 ];
 
@@ -25,3 +55,17 @@ const router = new VueRouter({
 });
 
 export default router;
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/login", "/register"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem("user");
+
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next("/login");
+  } else {
+    next();
+  }
+});

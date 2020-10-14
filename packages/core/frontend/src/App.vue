@@ -1,11 +1,6 @@
 <template>
   <v-app>
-    <TopBar></TopBar>
-
-    <FileTree></FileTree>
-    <v-main>
-      <router-view />
-    </v-main>
+    <router-view />
   </v-app>
 </template>
 
@@ -13,11 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import TopBar from "./components/TopBar.vue";
-import FileTree from "./components/FileTree.vue";
 
-@Component({
-  components: { TopBar, FileTree },
-})
+@Component
 export default class extends Vue {}
 </script>
