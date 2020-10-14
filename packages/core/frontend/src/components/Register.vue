@@ -62,7 +62,7 @@ export default class Register extends Vue {
       this.registerSuccess = true;
       this.registerFail = false;
     } catch (e) {
-      console.error(e);
+      // TODO: Display the error
       this.registerFail = true;
     }
   }

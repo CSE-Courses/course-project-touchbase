@@ -21,6 +21,9 @@ module.exports = {
     {
       files: [
         "**/__tests__/*.{j,t}s?(x)",
+        "**/tests/e2e/custom-assertions/*.{j,t}s?(x)",
+        "**/tests/e2e/custom-commands/*.{j,t}s?(x)",
+        "**/tests/e2e/page-objects/*.{j,t}s?(x)",
         "**/*.test.{j,t}s?(x)",
         "**/*.spec.{j,t}s?(x)",
         "**/jest-setup.{j,t}s"
@@ -30,6 +33,7 @@ module.exports = {
       },
       rules: {
         "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+        "no-console": "off",
       },
     },
   ],
