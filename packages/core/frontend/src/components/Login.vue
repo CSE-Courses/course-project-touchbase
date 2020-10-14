@@ -32,54 +32,35 @@
   </v-form>
 </template>
 
-<script>
-import feathers from "@feathersjs/feathers";
-import socketio from "@feathersjs/socketio-client";
-import io from "socket.io-client";
-import auth from "@feathersjs/authentication-client";
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
+import api from "../api";
 
-const socket = io("http://localhost:3030");
-const app = feathers();
+@Component
+export default class Login extends Vue {
+  email = "";
 
-// Setup the transport (Rest, Socket, etc.) here
-app.configure(socketio(socket));
+  password = "";
 
-// Available options are listed in the "Options" section
-app.configure(
-  auth({
-    storageKey: "auth",
-  })
-);
+  loginSuccess = false;
 
-export default {
-  name: "Login",
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data() {
-    return {
-      email: "",
-      password: "",
-      loginSuccess: false,
-      loginFail: false,
-      show1: false,
-    };
-  },
-  methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    submit() {
-      app
-        .authenticate({
-          strategy: "local",
-          email: this.email,
-          password: this.password,
-        })
-        .then(() => {
-          this.loginSuccess = true;
-          this.loginFail = false;
-        })
-        .catch(() => {
-          this.loginFail = true;
-        });
-    },
-  },
-};
+  loginFail = false;
+
+  show1 = false;
+
+  async submit() {
+    try {
+      await api.authenticate({
+        strategy: "local",
+        email: this.email,
+        password: this.password,
+      });
+
+      this.loginSuccess = true;
+      this.loginFail = false;
+    } catch {
+      this.loginFail = true;
+    }
+  }
+}
 </script>

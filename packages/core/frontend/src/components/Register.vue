@@ -34,39 +34,37 @@
   </v-form>
 </template>
 
-<script>
-import axios from "axios";
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
+import api from "../api";
 
-export default {
-  name: "Register",
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data() {
-    return {
-      email: "",
-      password: "",
-      registerSuccess: false,
-      registerFail: false,
-      show1: false,
-    };
-  },
-  methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    submit() {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const vm = this;
-      axios
-        .post("http://localhost:3030/users/", {
-          email: vm.email,
-          password: vm.password,
-        })
-        .then(function res() {
-          vm.registerSuccess = true;
-          vm.registerFail = false;
-        })
-        .catch(function res() {
-          vm.registerFail = true;
-        });
-    },
-  },
-};
+const usersService = api.service("users");
+
+@Component
+export default class Register extends Vue {
+  email = "";
+
+  password = "";
+
+  registerSuccess = false;
+
+  registerFail = false;
+
+  show1 = false;
+
+  async submit() {
+    try {
+      await usersService.create({
+        email: this.email,
+        password: this.password,
+      });
+
+      this.registerSuccess = true;
+      this.registerFail = false;
+    } catch (e) {
+      console.error(e);
+      this.registerFail = true;
+    }
+  }
+}
 </script>
