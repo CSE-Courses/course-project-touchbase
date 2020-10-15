@@ -18,7 +18,6 @@ import io from "socket.io-client";
 import feathers from "@feathersjs/feathers";
 import socketio from "@feathersjs/socketio-client";
 import auth from "@feathersjs/authentication-client";
-import router from "../router";
 
 const socket = io("http://localhost:3030");
 const app = feathers();
@@ -36,8 +35,9 @@ app.configure(
 @Component({})
 export default class AccountInfo extends Vue {
   logout2(): void {
-    app.logout();
-    router.push("/login");
+    app.logout().then(() => {
+      this.$router.push("/login");
+    });
   }
 }
 </script>
