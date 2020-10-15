@@ -1,6 +1,6 @@
 # Development dbs
 devdb.sqlite
-testdb.sqlite
+testdb-*.sqlite
 
 # Logs
 logs
@@ -47,6 +47,9 @@ coverage
 # Cypress test output
 **/tests/e2e/videos/
 **/tests/e2e/screenshots/
+
+# Nightwatch test output
+**/tests/e2e/reports
 
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

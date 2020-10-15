@@ -6,12 +6,8 @@ describe("'users' service", () => {
     password: "supersecret",
   };
 
-  beforeAll(async () => {
-    try {
-      await app.service("users").create(userInfo);
-    } catch (error) {
-      // Do nothing, it just means the user already exists and can be tested
-    }
+  beforeEach(async () => {
+    await app.service("users").create(userInfo);
   });
 
   it("registered the service", () => {

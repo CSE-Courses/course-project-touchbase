@@ -10,7 +10,7 @@
     "dev": "ts-node-dev --no-notify src/",
     "jest": "jest  --forceExit",
     "build": "shx rm -rf lib/ && tsc",
-    "clean": "shx --silent rm testdb.sqlite || true",
+    "clean": "shx --silent rm data/testdb-*.sqlite || true",
     "precommit": "lint-staged"
   },
   "main": "src",
