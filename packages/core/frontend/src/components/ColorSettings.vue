@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-switch v-model="$vuetify.theme.dark" :label="`Dark Mode`"></v-switch>
     <v-dialog v-model="dialog" top persistent max-width="300">
       <template v-slot:activator="{ on, attrs }">
         Primary Color: <v-btn :color="color" rounded v-bind="attrs" v-on="on"></v-btn>
