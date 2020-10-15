@@ -7,4 +7,7 @@ module.exports = {
     '@vue/prettier/@typescript-eslint',
     '@touchbase/extra'
   ],
+  rules: {
+    'class-methods-use-this': 'off'
+  }
 }
