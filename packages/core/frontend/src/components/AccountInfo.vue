@@ -14,28 +14,12 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import io from "socket.io-client";
-import feathers from "@feathersjs/feathers";
-import socketio from "@feathersjs/socketio-client";
-import auth from "@feathersjs/authentication-client";
-
-const socket = io("http://localhost:3030");
-const app = feathers();
-
-// Setup the transport (Rest, Socket, etc.) here
-app.configure(socketio(socket));
-
-// Available options are listed in the "Options" section
-app.configure(
-  auth({
-    storageKey: "auth",
-  })
-);
+import api from "../api";
 
 @Component({})
 export default class AccountInfo extends Vue {
   logout2(): void {
-    app.logout().then(() => {
+    api.logout().then(() => {
       this.$router.push("/login");
     });
   }
