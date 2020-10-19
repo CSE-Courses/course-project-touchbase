@@ -1,4 +1,4 @@
-import app from "../src/app";
+import app from "@/app";
 
 describe("authentication", () => {
   it("registered the authentication service", () => {

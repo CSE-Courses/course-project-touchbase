@@ -3,7 +3,7 @@ import {
   checkForUserObjectSpecificallyForFind,
   checkForUserObjectUnlessItsFind,
   attachUserToIncomingCollectionCreation,
-} from "../../utils/authHooks";
+} from "@/utils/authHooks";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;

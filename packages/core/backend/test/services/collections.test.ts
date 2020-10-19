@@ -1,5 +1,5 @@
 import { NotAuthenticated } from "@feathersjs/errors";
-import app from "../../src/app";
+import app from "@/app";
 
 const userInfo = {
   email: "someone@example.com",

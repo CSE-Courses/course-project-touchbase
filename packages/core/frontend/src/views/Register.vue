@@ -42,8 +42,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import api from "../api";
-import router from "../router";
+import api from "@/api";
 
 const usersService = api.service("users");
 
@@ -68,7 +67,7 @@ export default class Register extends Vue {
 
       this.registerSuccess = true;
       this.registerFail = false;
-      await router.push("/login");
+      await this.$router.push("/login");
 
       await api.authenticate({
         strategy: "local",

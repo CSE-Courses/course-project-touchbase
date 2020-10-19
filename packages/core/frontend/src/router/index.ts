@@ -18,7 +18,7 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Workspace" */ "../views/Workspace.vue"),
+    component: () => import(/* webpackChunkName: "Workspace" */ "@/views/Workspace.vue"),
     children: [
       {
         path: "/app/calendar",
@@ -26,7 +26,7 @@ const routes: Array<RouteConfig> = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "Calendar" */ "../views/Calendar.vue"),
+        component: () => import(/* webpackChunkName: "Calendar" */ "@/views/Calendar.vue"),
       },
     ],
   },
@@ -36,7 +36,7 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
+    component: () => import(/* webpackChunkName: "Login" */ "@/views/Login.vue"),
   },
   {
     path: "/register",
@@ -44,7 +44,7 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
+    component: () => import(/* webpackChunkName: "Register" */ "@/views/Register.vue"),
   },
 ];
 

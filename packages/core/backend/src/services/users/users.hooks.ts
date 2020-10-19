@@ -1,7 +1,7 @@
 import * as feathersAuthentication from "@feathersjs/authentication";
 import * as local from "@feathersjs/authentication-local";
 // eslint-disable-next-line import/named
-import { authenticateDontBlock, protectAuthenticated } from "../../utils/authHooks";
+import { authenticateDontBlock, protectAuthenticated } from "@/utils/authHooks";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
