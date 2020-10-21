@@ -2,7 +2,7 @@
   <v-app>
     <TopBar></TopBar>
     <FileTree></FileTree>
-    <AddButton @file-tree-refresh-needed="refreshFileTree"></AddButton>
+    <AddButton></AddButton>
     <v-main>
       <router-view />
     </v-main>
@@ -20,9 +20,5 @@ import AddButton from "../components/AddButton.vue";
 @Component({
   components: { TopBar, FileTree, AddButton },
 })
-export default class extends Vue {
-  async refreshFileTree() {
-    // put shit here
-  }
-}
+export default class extends Vue {}
 </script>
