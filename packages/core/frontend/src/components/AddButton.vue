@@ -57,6 +57,7 @@
             :key="arbit.valueOf"
             :input="arbit"
             :label="arbit"
+            :v-model="resourceData"
           >
           </v-text-field>
         </v-card-text>
@@ -64,7 +65,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text color="primary" @click="submit"> Submit </v-btn>
+          <v-btn text color="primary" @click="submitResource"> Submit </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,6 +78,8 @@ import { Component, Vue } from "vue-property-decorator";
 import api from "../api";
 
 const collectionsService = api.service("collections");
+
+const resourceService = api.service("resources");
 
 @Component({
   components: {},
@@ -96,7 +99,21 @@ export default class AddButton extends Vue {
 
   resourceInputs = { Hyperlink: ["URL"] };
 
+  resourceData = "google.com";
+
   collectionName = "";
+
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/explicit-module-boundary-types
+  async submitResource() {
+    const userID = await api.reAuthenticate();
+    await resourceService.create({
+      name: this.resourceName,
+      type: this.resourceType,
+      data: this.resourceData,
+      ownerID: userID.user.id,
+      // collectionID: ,
+    });
+  }
 
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/explicit-module-boundary-types
   async submit() {
