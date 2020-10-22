@@ -1,9 +1,10 @@
-import * as authentication from "@feathersjs/authentication";
+import { HooksObject } from "@feathersjs/feathers";
+import Resource from "@/models/resource.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
-export default {
+const hooks: HooksObject<Resource> = {
   before: {
-    all: [], // authentication goes here
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -32,3 +33,4 @@ export default {
     remove: [],
   },
 };
+export default hooks;
