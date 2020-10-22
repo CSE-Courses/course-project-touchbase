@@ -1,7 +1,7 @@
 // TODO: Replace once https://github.com/facebook/jest/pull/8751 is merged (should be Jest 27)
-// import app from '../src/app';
+// import app from '@/app';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const app = require("../src/app").default;
+const app = require("@/app").default;
 
 beforeEach(async () => {
   // Reset the contents of our DB before each test gets run

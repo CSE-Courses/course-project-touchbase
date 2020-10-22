@@ -1,12 +1,12 @@
 // Initializes the `collections` service on path `/collections`
 import { ServiceAddons } from "@feathersjs/feathers";
-import { Application } from "../../declarations";
+import { Application } from "@/declarations";
+import Collection from "@/models/collection.model";
 import Collections from "./collections.class";
-import Collection from "../../models/collection.model";
 import hooks from "./collections.hooks";
 
 // Add this service to the service type index
-declare module "../../declarations" {
+declare module "@/declarations" {
   interface ServiceTypes {
     collections: Collections & ServiceAddons<Collection>;
   }

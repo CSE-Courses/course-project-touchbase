@@ -8,7 +8,7 @@
       </v-toolbar>
       <template v-slot:activator="{ on, attrs }">
         <v-avatar id="Logo" rounded v-bind="attrs" v-on="on">
-          <v-img alt="TouchBase Logo" src="../assets/logo.svg" transition="scale-transition" />
+          <v-img alt="TouchBase Logo" src="@/assets/logo.svg" transition="scale-transition" />
         </v-avatar>
       </template>
       <v-card min-width="250">

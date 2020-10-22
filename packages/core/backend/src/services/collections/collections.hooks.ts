@@ -3,12 +3,14 @@ import {
   checkForUserObjectSpecificallyForFind,
   checkForUserObjectUnlessItsFind,
   attachUserToIncomingCollectionCreation,
-} from "../../utils/authHooks";
+} from "@/utils/authHooks";
+import { HooksObject } from "@feathersjs/feathers";
+import Collection from "@/models/collection.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
 
-export default {
+const hooks: HooksObject<Collection> = {
   before: {
     all: [authenticate("jwt")],
     find: [], // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -39,3 +41,4 @@ export default {
     remove: [],
   },
 };
+export default hooks;
