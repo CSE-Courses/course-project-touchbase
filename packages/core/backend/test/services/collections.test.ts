@@ -1,4 +1,4 @@
-import { NotAuthenticated } from "@feathersjs/errors";
+import { Forbidden } from "@feathersjs/errors";
 import app from "@/app";
 
 const userInfo = {
@@ -77,11 +77,7 @@ it("doesn't allow another user to access", async () => {
     password: "eslintistheworstthingonearth",
   };
 
-  try {
-    await app.service("users").create(userInfo2);
-  } catch (error) {
-    // Do nothing, it just means the user already exists and can be tested
-  }
+  await app.service("users").create(userInfo2);
 
   const { accessToken } = await app.service("authentication").create(
     {
@@ -96,5 +92,5 @@ it("doesn't allow another user to access", async () => {
       provider: "rest",
       authentication: { strategy: "jwt", accessToken },
     });
-  }).rejects.toThrow(NotAuthenticated);
+  }).rejects.toThrow(Forbidden);
 });

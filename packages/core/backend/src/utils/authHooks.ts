@@ -2,7 +2,7 @@ import * as feathersAuthentication from "@feathersjs/authentication";
 import { AuthenticateHookSettings } from "@feathersjs/authentication/lib/hooks/authenticate";
 import { HookContext } from "@feathersjs/feathers";
 import * as local from "@feathersjs/authentication-local";
-import { NotAuthenticated } from "@feathersjs/errors";
+import { Forbidden } from "@feathersjs/errors";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -32,27 +32,33 @@ export const protectAuthenticated = (...fields: string[]) => (context: HookConte
 };
 
 // Checks in collections, etc that User calling for Collection is Owner
-export function checkForUserObjectUnlessItsFind(context: HookContext) {
+export function assertIsOwner(context: HookContext) {
+  if (!context.params.provider) return;
+
   if (!(context.result.ownerID === context.params.user.id)) {
-    throw new NotAuthenticated();
+    throw new Forbidden();
   }
 }
 
 // undefineds are fun
-export function checkForUserObjectSpecificallyForFind(context: HookContext) {
+export function assertIsOwnerForFind(context: HookContext) {
+  if (!context.params.provider) return;
+
   if (context.result.data) {
     context.result.data = context.result.data.filter(
-      (collection: { ownerID: any }) => collection.ownerID === context.params.user.id
+      (item: { ownerID: any }) => item.ownerID === context.params.user.id
     );
   } else {
     context.result = context.result.filter(
-      (collection: { ownerID: any }) => collection.ownerID === context.params.user.id
+      (item: { ownerID: any }) => item.ownerID === context.params.user.id
     );
   }
 }
 
 // Name explains it
-export function attachUserToIncomingCollectionCreation(context: HookContext) {
+export function attachUserToIncomingCreation(context: HookContext) {
+  if (!context.params.provider) return;
+
   if (context.params.provider != null) {
     context.data.ownerID = context.params.user.id;
   }
