@@ -64,7 +64,7 @@ export default class Login extends Vue {
 
       this.loginSuccess = true;
       this.loginFail = false;
-      await router.push("/app");
+      await router.go(0);
     } catch {
       this.loginFail = true;
     }

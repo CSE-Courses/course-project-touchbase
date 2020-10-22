@@ -2,7 +2,7 @@
   <div>
     <v-subheader>Hyperlinks</v-subheader>
     <v-btn
-      v-for="link in items2"
+      v-for="link in items.data"
       :key="link"
       dark
       color="primary"
@@ -21,32 +21,9 @@ import api from "../../api";
 
 const resourceService = api.service("resources");
 
-const fakeServerReply = [
-  {
-    name: "Google",
-    type: "Hyperlink",
-    data: "http://www.google.com",
-    ownerID: 1,
-  },
-  {
-    name: "Github",
-    type: "Hyperlink",
-    data: "github.com",
-    ownerID: 1,
-  },
-  {
-    name: "YouTube",
-    type: "Hyperlink",
-    data: "youtube.com",
-    ownerID: 1,
-  },
-];
-
 @Component
 export default class Hyperlink extends Vue {
   items: { data: [] } = { data: [] };
-
-  items2 = fakeServerReply;
 
   async pullItems(): Promise<void> {
     const authRes = await api.reAuthenticate();
@@ -59,7 +36,9 @@ export default class Hyperlink extends Vue {
   }
 
   mounted(): void {
-    this.pullItems();
+    this.$root.$on("resource-refresh-needed", () => {
+      this.pullItems();
+    });
   }
 }
 </script>

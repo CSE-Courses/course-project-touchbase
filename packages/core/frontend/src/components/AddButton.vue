@@ -55,9 +55,9 @@
           <v-text-field
             v-for="arbit in resourceInputs[resourceType]"
             :key="arbit.valueOf"
+            v-model="resourceData"
             :input="arbit"
             :label="arbit"
-            :v-model="resourceData"
           >
           </v-text-field>
         </v-card-text>
@@ -99,13 +99,14 @@ export default class AddButton extends Vue {
 
   resourceInputs = { Hyperlink: ["URL"] };
 
-  resourceData = "google.com";
+  resourceData = "";
 
   collectionName = "";
 
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/explicit-module-boundary-types
   async submitResource() {
     const userID = await api.reAuthenticate();
+    this.$root.$emit("resource-refresh-needed");
     await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,
@@ -113,6 +114,10 @@ export default class AddButton extends Vue {
       ownerID: userID.user.id,
       // collectionID: ,
     });
+    this.resourceType = null;
+    this.resourceDialog = false;
+    this.resourceData = "";
+    this.resourceName = "";
   }
 
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/explicit-module-boundary-types
