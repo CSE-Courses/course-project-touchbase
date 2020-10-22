@@ -38,6 +38,9 @@ export default class FileTree extends Vue {
 
   mounted(): void {
     this.pullItems();
+    this.$root.$on("file-tree-refresh-needed", () => {
+      this.pullItems();
+    });
   }
 }
 </script>
