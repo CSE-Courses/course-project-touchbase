@@ -1,8 +1,5 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import feathers from "@feathersjs/feathers";
-import socketio from "@feathersjs/socketio-client";
-import io from "socket.io-client";
 import auth from "@feathersjs/authentication-client";
 
 Vue.use(VueRouter);
@@ -10,7 +7,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/app",
+    redirect: "/app/resources/hyperlink",
   },
   {
     path: "/app/",
@@ -20,6 +17,11 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Workspace" */ "../views/Workspace.vue"),
     children: [
+      {
+        path: "/app/resources/hyperlink",
+        name: "Hyperlink",
+        component: () => import("../views/resources/Hyperlink.vue"),
+      },
       {
         path: "/app/calendar",
         name: "Calendar",

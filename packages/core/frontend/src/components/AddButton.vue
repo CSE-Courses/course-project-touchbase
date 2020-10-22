@@ -109,7 +109,7 @@ export default class AddButton extends Vue {
     await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,
-      data: this.resourceData,
+      data: this.resourceData.replace("https://", "").replace("http://", ""),
       ownerID: userID.user.id,
       // collectionID: ,
     });
