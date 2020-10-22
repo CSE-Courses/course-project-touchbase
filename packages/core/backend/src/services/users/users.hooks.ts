@@ -45,3 +45,4 @@ const hooks: HooksObject<User> = {
     remove: [],
   },
 };
+export default hooks;

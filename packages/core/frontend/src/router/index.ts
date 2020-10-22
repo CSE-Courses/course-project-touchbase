@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/app/resources/hyperlink",
+    redirect: "/app/",
   },
   {
     path: "/app/",
@@ -18,9 +18,9 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "Workspace" */ "@/views/Workspace.vue"),
     children: [
       {
-        path: "/app/resources/hyperlink",
-        name: "Hyperlink",
-        component: () => import("../views/resources/Hyperlink.vue"),
+        path: "/app/resource/:id",
+        name: "Resource",
+        component: () => import("../views/Resource.vue"),
       },
       {
         path: "/app/calendar",
