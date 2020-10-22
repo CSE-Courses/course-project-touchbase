@@ -56,6 +56,8 @@ export default class AddButton extends Vue {
 
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/explicit-module-boundary-types
   async submit() {
+    this.dialog = false;
+    this.$root.$emit("file-tree-refresh-needed");
     await collectionsService.create({
       // create sample collection just for testing purposes
       name: this.collectionName,
