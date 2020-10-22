@@ -1,8 +1,8 @@
 import * as feathersAuthentication from "@feathersjs/authentication";
 import {
-  checkForUserObjectSpecificallyForFind,
-  checkForUserObjectUnlessItsFind,
-  attachUserToIncomingCollectionCreation,
+  assertIsOwnerForFind,
+  assertIsOwner,
+  attachUserToIncomingCreation,
 } from "@/utils/authHooks";
 import { HooksObject } from "@feathersjs/feathers";
 import Collection from "@/models/collection.model";
@@ -13,9 +13,9 @@ const { authenticate } = feathersAuthentication.hooks;
 const hooks: HooksObject<Collection> = {
   before: {
     all: [authenticate("jwt")],
-    find: [], // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    find: [],
     get: [],
-    create: [attachUserToIncomingCollectionCreation],
+    create: [attachUserToIncomingCreation],
     update: [],
     patch: [],
     remove: [],
@@ -23,12 +23,12 @@ const hooks: HooksObject<Collection> = {
 
   after: {
     all: [],
-    find: [checkForUserObjectSpecificallyForFind],
-    get: [checkForUserObjectUnlessItsFind],
+    find: [assertIsOwnerForFind],
+    get: [assertIsOwner],
     create: [],
-    update: [checkForUserObjectUnlessItsFind],
-    patch: [checkForUserObjectUnlessItsFind],
-    remove: [checkForUserObjectUnlessItsFind],
+    update: [assertIsOwner],
+    patch: [assertIsOwner],
+    remove: [assertIsOwner],
   },
 
   error: {

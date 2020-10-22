@@ -6,7 +6,8 @@ import auth from "@feathersjs/authentication-client";
 const app = feathers();
 
 // Websocket transfer
-const socket = io("http://localhost:3030");
+if (!process.env.VUE_APP_API_URL) throw Error('API URL unavailable');
+const socket = io(process.env.VUE_APP_API_URL);
 app.configure(socketio(socket));
 
 app.configure(
