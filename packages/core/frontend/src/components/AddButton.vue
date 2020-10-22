@@ -42,8 +42,9 @@
         <v-card-text>
           <v-form ref="collectionForm">
             <v-text-field
-              v-model="collectionName" label="Collection name"
-              :rules="[val => !!val || 'Collection name is required']"
+              v-model="collectionName"
+              label="Collection name"
+              :rules="[(val) => !!val || 'Collection name is required']"
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -62,14 +63,21 @@
         <v-card-text>
           <v-form ref="resourceForm">
             <v-text-field
-              v-model="resourceName" label="Resource name"
-              :rules="[val => !!val || 'Resource name is required']"
+              v-model="resourceName"
+              label="Resource name"
+              :rules="[(val) => !!val || 'Resource name is required']"
             ></v-text-field>
             <v-select
-              v-model="resourceType" label="Resource type" :items="resourceTypes"
-              :rules="[val => !!val || 'Resource type is required']"
+              v-model="resourceType"
+              label="Resource type"
+              :items="resourceTypes"
+              :rules="[(val) => !!val || 'Resource type is required']"
             ></v-select>
-            <component v-if="resourceFieldsComponent" :is="resourceFieldsComponent" v-model="resourceData"></component>
+            <component
+              :is="resourceFieldsComponent"
+              v-if="resourceFieldsComponent"
+              v-model="resourceData"
+            ></component>
           </v-form>
         </v-card-text>
 
@@ -87,7 +95,7 @@
 import { Component, Ref, Vue, Watch } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "@/api";
-import { VForm } from 'vuetify/lib';
+import { VForm } from "vuetify/lib";
 
 const collectionsService = api.service("collections");
 
@@ -106,7 +114,7 @@ export default class AddButton extends Vue {
   showCollectionDialog = false;
 
   collectionName = "";
-  
+
   showResourceDialog = false;
 
   resourceName = "";
@@ -119,9 +127,12 @@ export default class AddButton extends Vue {
 
   resourceFieldsComponent: Vue | null = null;
 
-  @Watch('resourceType')
+  @Watch("resourceType")
   async onTypeChanged() {
-    if (this.resourceType) this.resourceFieldsComponent = (await import(`./resource-creation-fields/${this.resourceType}`)).default;
+    if (this.resourceType)
+      this.resourceFieldsComponent = (
+        await import(`./resource-creation-fields/${this.resourceType}`)
+      ).default;
     else this.resourceFieldsComponent = null;
   }
 
@@ -140,7 +151,7 @@ export default class AddButton extends Vue {
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
-    this.$router.push(`/app/resource/${resource.id}`)
+    this.$router.push(`/app/resource/${resource.id}`);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
