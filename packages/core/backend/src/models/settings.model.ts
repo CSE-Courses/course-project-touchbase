@@ -13,10 +13,6 @@ import User from "./user.model";
 @Table
 export default class Setting extends Model implements Setting {
   @AllowNull(false)
-  @Column
-  name!: string;
-
-  @AllowNull(false)
   @ForeignKey(() => User)
   @Column
   ownerID!: number;

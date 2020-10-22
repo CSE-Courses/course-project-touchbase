@@ -31,8 +31,11 @@ export default class extends Vue {
         ownerID: authRes.user.id,
       },
     });
-    this.$vuetify.theme.dark = settingsData.data.darkmode;
-    this.$vuetify.theme.themes.light.primary = settingsData.data.color;
+    if (settingsData.data.length > 0) {
+      const settings = settingsData.data[0];
+      this.$vuetify.theme.dark = settings.darkmode;
+      this.$vuetify.theme.themes.light.primary = settings.color;
+    }
   }
 
   mounted(): void {

@@ -1,7 +1,7 @@
 // Initializes the `settings` service on path `/settings`
 import { ServiceAddons } from "@feathersjs/feathers";
 import { Application } from "@/declarations";
-import createModel from "@/models/settings.model";
+import Setting from "@/models/settings.model";
 import Settings from "./settings.class";
 import hooks from "./settings.hooks";
 
@@ -14,7 +14,7 @@ declare module "@/declarations" {
 
 export default function (app: Application): void {
   const options = {
-    Model: createModel(app),
+    Model: Setting,
     paginate: app.get("paginate"),
   };
 
