@@ -18,7 +18,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
-import api from "../api";
+import api from "@/api";
 
 const collectionsService = api.service("collections");
 

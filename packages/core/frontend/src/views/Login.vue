@@ -39,8 +39,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import api from "../api";
-import router from "../router";
+import api from "@/api";
 
 @Component
 export default class Login extends Vue {
@@ -64,7 +63,7 @@ export default class Login extends Vue {
 
       this.loginSuccess = true;
       this.loginFail = false;
-      await router.push("/app");
+      await this.$router.push("/app");
     } catch {
       this.loginFail = true;
     }

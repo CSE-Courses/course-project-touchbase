@@ -1,8 +1,5 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import feathers from "@feathersjs/feathers";
-import socketio from "@feathersjs/socketio-client";
-import io from "socket.io-client";
 import auth from "@feathersjs/authentication-client";
 
 Vue.use(VueRouter);
@@ -10,7 +7,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/app",
+    redirect: "/app/",
   },
   {
     path: "/app/",
@@ -18,15 +15,20 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Workspace" */ "../views/Workspace.vue"),
+    component: () => import(/* webpackChunkName: "Workspace" */ "@/views/Workspace.vue"),
     children: [
+      {
+        path: "/app/resource/:id",
+        name: "Resource",
+        component: () => import("../views/Resource.vue"),
+      },
       {
         path: "/app/calendar",
         name: "Calendar",
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "Calendar" */ "../views/Calendar.vue"),
+        component: () => import(/* webpackChunkName: "Calendar" */ "@/views/Calendar.vue"),
       },
     ],
   },
@@ -36,7 +38,7 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
+    component: () => import(/* webpackChunkName: "Login" */ "@/views/Login.vue"),
   },
   {
     path: "/register",
@@ -44,7 +46,7 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
+    component: () => import(/* webpackChunkName: "Register" */ "@/views/Register.vue"),
   },
 ];
 

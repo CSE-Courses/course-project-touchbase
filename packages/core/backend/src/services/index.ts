@@ -1,4 +1,4 @@
-import { Application } from "../declarations";
+import { Application } from "@/declarations";
 // eslint-disable-next-line import/no-cycle
 import users from "./users/users.service";
 // eslint-disable-next-line import/no-cycle
