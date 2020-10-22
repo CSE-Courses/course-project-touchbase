@@ -13,10 +13,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import TopBar from "../components/TopBar.vue";
-import FileTree from "../components/FileTree.vue";
-import AddButton from "../components/AddButton.vue";
-import api from "../api";
+import TopBar from "@/components/TopBar.vue";
+import FileTree from "@/components/FileTree.vue";
+import AddButton from "@/components/AddButton.vue";
+import api from "@/api";
 
 const settingsService = api.service("settings");
 

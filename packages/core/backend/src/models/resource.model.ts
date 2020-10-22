@@ -25,7 +25,7 @@ export default class Resource extends Model implements Resource {
   @BelongsTo(() => User)
   owner!: User;
 
-  @AllowNull(false)
+  // @AllowNull(false)
   @ForeignKey(() => Collection)
   @Column
   collectionID!: number;
