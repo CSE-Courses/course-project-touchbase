@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" fullscreen :close-on-content-click="dialog" offset-y="50">
+    <v-dialog v-model="dialog" fullscreen :close-on-content-click="dialog">
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
