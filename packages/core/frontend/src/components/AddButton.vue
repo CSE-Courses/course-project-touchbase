@@ -15,7 +15,7 @@
           <v-icon v-else> mdi-plus </v-icon>
         </v-btn>
       </template>
-      <v-tooltip top>
+      <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             fab
@@ -26,14 +26,26 @@
             v-on="on"
             @click="showResourceDialog = !showResourceDialog"
           >
-            <v-icon>mdi-pencil</v-icon>
+            <v-icon>mdi-file-document</v-icon>
           </v-btn>
         </template>
-        <span>Add Resource</span>
+        <span>Create Resource</span>
       </v-tooltip>
-      <v-btn fab dark small color="primary" @click="showCollectionDialog = !showCollectionDialog">
-        <v-icon>mdi-folder-open</v-icon>
-      </v-btn>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          fab
+          dark
+          small
+          color="primary"
+          v-bind="attrs"
+          v-on="on"
+          @click="showCollectionDialog = !showCollectionDialog">
+          <v-icon>mdi-folder</v-icon>
+        </v-btn>
+        </template>
+        <span>Create Collection</span>
+      </v-tooltip>
     </v-speed-dial>
 
     <!-- Add collection dialog -->
