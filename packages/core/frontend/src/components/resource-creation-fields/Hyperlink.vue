@@ -3,6 +3,7 @@
     :value="resourceData"
     label="URL"
     :rules="urlValidators"
+    @keyup.enter="$emit('submit')"
     @input="(e) => $emit('input', e)"
   ></v-text-field>
 </template>

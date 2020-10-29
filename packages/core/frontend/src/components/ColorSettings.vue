@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-switch v-model="$vuetify.theme.dark" :label="`Dark Mode`" @click="save"></v-switch>
-    <v-dialog v-model="dialog" top persistent max-width="300">
+    <v-dialog v-model="dialog" top max-width="300" @click:outside="writeColor">
       <template v-slot:activator="{ on, attrs }">
         Primary Color: <v-btn :color="color" rounded v-bind="attrs" v-on="on"></v-btn>
       </template>
@@ -30,7 +30,6 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { VuetifyParsedThemeItem } from "vuetify/types/services/theme.d";
 import api from "../api";
 
 const settingsService = api.service("settings");
@@ -44,10 +43,6 @@ export default class ColorSettings extends Vue {
   dialog = false;
 
   color = this.$vuetify.theme.themes.light.primary;
-
-  showColor(): Partial<VuetifyParsedThemeItem> | string | number | undefined {
-    return this.color;
-  }
 
   writeColor(): void {
     this.dialog = false;

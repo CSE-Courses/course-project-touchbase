@@ -11,7 +11,14 @@
               <v-alert v-if="loginFail" type="error"
                 >Account login has failed! Please check your login credentials.</v-alert
               >
-              <v-text-field id="email" v-model="email" label="E-mail" required></v-text-field>
+              <v-text-field
+                id="email"
+                v-model="email"
+                label="E-mail"
+                required
+                :rules="emailRules"
+                @keydown.enter="submit"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -23,13 +30,23 @@
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="show1 ? 'text' : 'password'"
                 required
+                :rules="passwordRules"
                 @click:append="show1 = !show1"
+                @keydown.enter="submit"
               ></v-text-field>
             </v-col>
           </v-row>
         </v-container>
         <v-col>
-          <v-btn id="login" depressed color="secondary" @click="submit">Login</v-btn>
+          <v-btn
+            id="login"
+            depressed
+            color="primary"
+            :disabled="!(password !== '' && email !== '')"
+            :loading="loading"
+            @click="submit"
+            >Login</v-btn
+          >
         </v-col>
       </v-form>
       <v-btn id="create" block text to="/register">Create Account</v-btn>
@@ -53,20 +70,30 @@ export default class Login extends Vue {
 
   show1 = false;
 
+  loading = false;
+
+  emailRules = [
+    (v: string): boolean => !!v || "E-mail is required",
+    (v: string): boolean => /.+@.+/.test(v) || "E-mail must be valid",
+  ];
+
+  passwordRules = [(v: string): boolean => !!v || "Password is required"];
+
   async submit() {
+    this.loading = true;
     try {
       await api.authenticate({
         strategy: "local",
         email: this.email,
         password: this.password,
       });
-
       this.loginSuccess = true;
       this.loginFail = false;
       await this.$router.push("/app");
     } catch {
       this.loginFail = true;
     }
+    this.loading = false;
   }
 }
 </script>

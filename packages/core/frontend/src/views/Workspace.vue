@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <TopBar></TopBar>
-    <FileTree></FileTree>
+    <TopBar @toggle="toggle = !toggle"></TopBar>
+    <FileTree :toggle="toggle"></FileTree>
     <AddButton></AddButton>
     <v-main>
       <router-view />
@@ -24,6 +24,8 @@ const settingsService = api.service("settings");
   components: { TopBar, FileTree, AddButton },
 })
 export default class extends Vue {
+  toggle = true;
+
   async pullSettings(): Promise<void> {
     const authRes = await api.reAuthenticate();
     const settingsData = await settingsService.find({

@@ -1,6 +1,9 @@
 <template>
   <div>
     <v-app-bar app color="primary" flat dark clipped-left clipped-right>
+      <v-btn icon @click="$emit('toggle')">
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
       <Tabs></Tabs>
       <v-spacer></v-spacer>
       <TouchbaseButton></TouchbaseButton>
