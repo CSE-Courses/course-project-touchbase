@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-tabs background-color="primary">
-      <v-tab to="/app/" text outlined rounded>
-        <span>Timeline</span>
+      <v-tab to="/app/browse" text outlined rounded>
+        <span>Browse</span>
       </v-tab>
 
       <v-tab to="/app/calendar" text outlined rounded>

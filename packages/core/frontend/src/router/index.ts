@@ -7,15 +7,13 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/app/",
+    redirect: "/app/browse",
   },
   {
     path: "/app/",
     name: "Workspace",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Workspace" */ "@/views/Workspace.vue"),
+    redirect: "/app/browse",
     children: [
       {
         path: "/app/resource/:id",
@@ -25,27 +23,23 @@ const routes: Array<RouteConfig> = [
       {
         path: "/app/calendar",
         name: "Calendar",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "Calendar" */ "@/views/Calendar.vue"),
+      },
+      {
+        path: "/app/browse",
+        name: "Browse",
+        component: () => import(/* webpackChunkName: "Browse" */ "@/views/lists/BrowseList.vue"),
       },
     ],
   },
   {
     path: "/login",
     name: "Login",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Login" */ "@/views/Login.vue"),
   },
   {
     path: "/register",
     name: "Register",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Register" */ "@/views/Register.vue"),
   },
 ];
