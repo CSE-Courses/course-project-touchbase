@@ -87,6 +87,7 @@
               :is="resourceFieldsComponent"
               v-if="resourceFieldsComponent"
               v-model="resourceData"
+              @submit="submitResource"
             ></component>
           </v-card-text>
 
