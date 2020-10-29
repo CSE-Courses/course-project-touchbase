@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import Tabs from "./Tabs.vue";
-import TouchbaseButton from "./TouchbaseButton.vue";
+import TouchbaseButton from "./SettingsButton.vue";
 
 @Component({
   components: { Tabs, TouchbaseButton },
