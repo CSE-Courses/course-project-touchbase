@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import auth from "@feathersjs/authentication-client";
 
 Vue.use(VueRouter);
 
@@ -19,11 +18,6 @@ const routes: Array<RouteConfig> = [
         path: "/app/resource/:id",
         name: "Resource",
         component: () => import("../views/Resource.vue"),
-      },
-      {
-        path: "/app/calendar",
-        name: "Calendar",
-        component: () => import(/* webpackChunkName: "Calendar" */ "@/views/Calendar.vue"),
       },
       {
         path: "/app/browse",

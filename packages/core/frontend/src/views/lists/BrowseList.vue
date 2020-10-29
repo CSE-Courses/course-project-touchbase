@@ -47,7 +47,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import api from "@/api";
 
 const resourceService = api.service("resources");
-const collectionsService = api.service("resources");
+const collectionsService = api.service("collections");
 
 @Component
 export default class BrowseList extends Vue {
