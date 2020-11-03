@@ -5,17 +5,17 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <TouchbaseButton></TouchbaseButton>
+      <SettingsButton></SettingsButton>
     </v-app-bar>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import TouchbaseButton from "./TouchbaseButton.vue";
+import SettingsButton from "./SettingsButton.vue";
 
 @Component({
-  components: { TouchbaseButton },
+  components: { SettingsButton },
 })
 export default class TopBar extends Vue {}
 </script>

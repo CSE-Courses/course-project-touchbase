@@ -7,9 +7,9 @@
         </v-btn>
       </v-toolbar>
       <template v-slot:activator="{ on, attrs }">
-        <v-avatar id="Logo" rounded v-bind="attrs" v-on="on">
-          <v-img alt="TouchBase Logo" src="@/assets/logo.svg" transition="scale-transition" />
-        </v-avatar>
+        <v-btn icon x-large color="accent" v-bind="attrs" v-on="on">
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
       </template>
       <v-card min-width="250">
         <AccountPopup></AccountPopup>
