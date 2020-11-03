@@ -26,6 +26,13 @@ export default class Collection extends Model implements Collection {
   @BelongsTo(() => User)
   owner!: User;
 
+  @ForeignKey(() => Collection)
+  @Column
+  collectionID!: number;
+
+  @BelongsTo(() => Collection)
+  collection!: Collection;
+
   @HasMany(() => Resource)
   resources?: Resource[];
 }

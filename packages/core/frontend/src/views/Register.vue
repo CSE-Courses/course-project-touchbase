@@ -12,7 +12,14 @@
                 >Account creation has failed! Please contact an administrator for
                 assistance.</v-alert
               >
-              <v-text-field id="email" v-model="email" label="E-mail" required></v-text-field>
+              <v-text-field
+                id="email"
+                v-model="email"
+                label="E-mail"
+                :rules="emailRules"
+                required
+                @keydown.enter="submit"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -26,13 +33,23 @@
                 hint="At least 8 characters"
                 counter
                 required
+                :rules="passwordRules"
                 @click:append="show1 = !show1"
+                @keydown.enter="submit"
               ></v-text-field>
             </v-col>
           </v-row>
         </v-container>
         <v-col>
-          <v-btn id="register" depressed color="secondary" @click="submit">Register</v-btn>
+          <v-btn
+            id="register"
+            depressed
+            color="primary"
+            :loading="loading"
+            :disabled="!(password !== '' && email !== '')"
+            @click="submit"
+            >Register</v-btn
+          >
         </v-col>
       </v-form>
       <v-btn id="existing" block text to="/login">Use Existing Account</v-btn>
@@ -58,7 +75,20 @@ export default class Register extends Vue {
 
   show1 = false;
 
+  loading = false;
+
+  emailRules = [
+    (v: string): boolean => !!v || "E-mail is required",
+    (v: string): boolean => /.+@.+/.test(v) || "E-mail must be valid",
+  ];
+
+  passwordRules = [
+    (v: string): boolean => !!v || "Password is required",
+    (v: string): boolean => v.length >= 8 || "Password must be more than 8 characters",
+  ];
+
   async submit() {
+    this.loading = true;
     try {
       await usersService.create({
         email: this.email,
@@ -78,6 +108,7 @@ export default class Register extends Vue {
       // TODO: Display the error
       this.registerFail = true;
     }
+    this.loading = false;
   }
 }
 </script>
