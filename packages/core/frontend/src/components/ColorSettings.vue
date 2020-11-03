@@ -1,40 +1,30 @@
 <template>
   <div>
     <v-switch v-model="$vuetify.theme.dark" :label="`Dark Mode`" @click="save"></v-switch>
-    <v-dialog v-model="dialog" top max-width="300" @click:outside="writeColor">
-      <template v-slot:activator="{ on, attrs }">
-        Primary Color: <v-btn :color="color" rounded v-bind="attrs" v-on="on"></v-btn>
-      </template>
-      <v-card>
-        <v-color-picker
-          v-model="color"
-          :value="color"
-          :show-swatches="swatch"
-          :hide-canvas="swatch"
-          :hide-inputs="swatch"
-          swatches-max-height="500"
-          mode="hexa"
-          canvas-height="250"
-        ></v-color-picker>
-        <v-card-actions>
-          <v-btn text @click.stop="swatch = !swatch">
-            <v-icon>mdi-palette</v-icon>
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn text @click="writeColor">Done</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <v-row>
+      <ColorPicker name="Primary Color" color="primary" dark="light" @save="save"></ColorPicker>
+    </v-row>
+    <v-row>
+      <ColorPicker name="Secondary Color" color="secondary" @save="save"></ColorPicker>
+    </v-row>
+    <v-row>
+      <ColorPicker name="Accent Color" color="accent" @save="save"></ColorPicker>
+    </v-row>
+    <v-row>
+      <ColorPicker name="Background Color" color="background" @save="save"></ColorPicker>
+    </v-row>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import ColorPicker from "@/components/ColorPicker.vue";
 import api from "../api";
 
 const settingsService = api.service("settings");
-
-@Component
+@Component({
+  components: { ColorPicker },
+})
 export default class ColorSettings extends Vue {
   swatch = false;
 
@@ -43,12 +33,6 @@ export default class ColorSettings extends Vue {
   dialog = false;
 
   color = this.$vuetify.theme.themes.light.primary;
-
-  writeColor(): void {
-    this.dialog = false;
-    this.$vuetify.theme.themes.light.primary = this.color;
-    this.save();
-  }
 
   async save(): Promise<void> {
     const user = await api.reAuthenticate();
@@ -60,13 +44,13 @@ export default class ColorSettings extends Vue {
     if (settingsData.data.length > 0) {
       await settingsService.update(settingsData.data[0].id, {
         darkmode: this.$vuetify.theme.dark,
-        color: this.color,
+        color: JSON.stringify(this.$vuetify.theme.themes),
         ownerID: user.user.id,
       });
     } else {
       await settingsService.create({
         darkmode: this.$vuetify.theme.dark,
-        color: this.color,
+        color: JSON.stringify(this.$vuetify.theme.themes),
         ownerID: user.user.id,
       });
     }

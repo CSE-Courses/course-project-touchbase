@@ -42,7 +42,7 @@
             id="login"
             depressed
             color="primary"
-            :disabled="!(password !== '' && email !== '')"
+            :disabled="!(password.length >= 8 && /.+@.+/.test(email))"
             :loading="loading"
             @click="submit"
             >Login</v-btn

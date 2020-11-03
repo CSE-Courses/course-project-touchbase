@@ -46,7 +46,7 @@
             depressed
             color="primary"
             :loading="loading"
-            :disabled="!(password !== '' && email !== '')"
+            :disabled="!(password.length >= 8 && /.+@.+/.test(email))"
             @click="submit"
             >Register</v-btn
           >
