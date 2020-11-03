@@ -177,9 +177,8 @@ export default class AddButton extends Vue {
     if (!this.collectionForm.validate()) return;
 
     this.showCollectionDialog = false;
-    this.$root.$emit("file-tree-refresh-needed");
+    this.$root.$emit("collection-refresh-needed");
     await collectionsService.create({
-      // create sample collection just for testing purposes
       name: this.collectionName,
     });
     this.collectionForm.reset();
