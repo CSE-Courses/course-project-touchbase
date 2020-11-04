@@ -38,25 +38,7 @@ const collectionsService = api.service("collections");
 
 @Component
 export default class Sidebar extends Vue {
-  @Prop({ defualt: true }) toggle;
+  @Prop({ default: true }) toggle;
 
-  items: { data: [] } = { data: [] };
-
-  async pullItems(): Promise<void> {
-    const authRes = await api.reAuthenticate();
-
-    this.items = await collectionsService.find({
-      query: {
-        ownerID: authRes.user.id,
-      },
-    });
-  }
-
-  mounted(): void {
-    this.pullItems();
-    this.$root.$on("collection-refresh-needed", () => {
-      this.pullItems();
-    });
-  }
 }
 </script>
