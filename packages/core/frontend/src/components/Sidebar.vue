@@ -11,7 +11,20 @@
       open-on-click
       activatable
     >
-      <v-treeview :items="items.data" dense activatable hoverable> </v-treeview>
+      <v-subheader>List Views</v-subheader>
+      <v-list nav dense>
+        <v-list-item-group color="primary">
+          <v-list-item to="/app/browse">
+            <v-list-item-icon>
+              <v-icon>mdi-folder-multiple</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Browse</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
   </div>
 </template>
@@ -24,9 +37,8 @@ import api from "@/api";
 const collectionsService = api.service("collections");
 
 @Component
-export default class FileTree extends Vue {
-  @Prop({ defualt: true })
-  toggle;
+export default class Sidebar extends Vue {
+  @Prop({ defualt: true }) toggle;
 
   items: { data: [] } = { data: [] };
 
@@ -42,7 +54,7 @@ export default class FileTree extends Vue {
 
   mounted(): void {
     this.pullItems();
-    this.$root.$on("file-tree-refresh-needed", () => {
+    this.$root.$on("collection-refresh-needed", () => {
       this.pullItems();
     });
   }

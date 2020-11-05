@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <TopBar @toggle="toggle = !toggle"></TopBar>
-    <FileTree :toggle="toggle"></FileTree>
+    <Sidebar :toggle="toggle"></Sidebar>
     <AddButton></AddButton>
     <v-main>
       <router-view />
@@ -14,14 +14,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TopBar from "@/components/TopBar.vue";
-import FileTree from "@/components/FileTree.vue";
+import Sidebar from "@/components/Sidebar.vue";
 import AddButton from "@/components/AddButton.vue";
 import api from "@/api";
 
 const settingsService = api.service("settings");
 
 @Component({
-  components: { TopBar, FileTree, AddButton },
+  components: { TopBar, Sidebar, AddButton },
 })
 export default class extends Vue {
   toggle = true;
