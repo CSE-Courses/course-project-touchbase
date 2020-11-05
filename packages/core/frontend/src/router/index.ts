@@ -20,7 +20,7 @@ const routes: Array<RouteConfig> = [
         component: () => import("../views/Resource.vue"),
       },
       {
-        path: "/app/browse",
+        path: "/app/browse/:collectionID?",
         name: "Browse",
         component: () => import(/* webpackChunkName: "Browse" */ "@/views/lists/BrowseList.vue"),
       },
