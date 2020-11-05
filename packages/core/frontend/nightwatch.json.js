@@ -3,6 +3,7 @@ module.exports = {
 
   webdriver: {
     start_process: true,
+    // eslint-disable-next-line import/no-extraneous-dependencies,@typescript-eslint/no-var-requires,global-require
     server_path: require("chromedriver").path,
     port: 9515,
   },
