@@ -11,11 +11,4 @@ module.exports = {
       // .assert.elementCount('img', 1)
       .end();
   },
-
-  "example e2e test using a custom command": (browser) => {
-    browser
-      .openHomepage()
-      // .assert.elementPresent('.hello')
-      .end();
-  },
 };

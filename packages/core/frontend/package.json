@@ -7,7 +7,7 @@
     "serve": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service serve",
     "build": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service test:e2e",
+    "test:e2e": "npx lerna bootstrap && concurrently --success first --kill-others -n e2e,api -c green,blue \"wait-on \"http://localhost:3030\" && cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service test:e2e\" \"cd ../backend && cross-env NODE_ENV=test npm start\"",
     "lint": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service lint",
     "precommit": "lint-staged",
     "start": "npm run serve",
@@ -50,6 +50,7 @@
     "@vue/eslint-config-typescript": "^5.1.0",
     "@vue/test-utils": "^1.1.0",
     "chromedriver": "^86.0.0",
+    "concurrently": "^5.3.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.8.1",
     "eslint-plugin-import": "^2.22.0",
@@ -57,13 +58,15 @@
     "eslint-plugin-vue": "^6.2.2",
     "geckodriver": "^1.20.0",
     "lint-staged": "^10.3.0",
+    "nightwatch": "^1.5.0",
     "prettier": "^2.1.1",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
     "typescript": "~4.0.2",
     "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-template-compiler": "^2.6.12",
-    "vuetify-loader": "^1.3.0"
+    "vuetify-loader": "^1.3.0",
+    "wait-on": "^5.2.0"
   },
   "directories": {
     "lib": "src",
