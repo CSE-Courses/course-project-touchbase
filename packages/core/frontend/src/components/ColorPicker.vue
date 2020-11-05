@@ -1,8 +1,14 @@
 <template>
   <v-dialog v-model="dialog" top max-width="300" @click:outside="writeColor">
     <template v-slot:activator="{ on, attrs }">
-      {{ name }}
-      <v-btn :color="color" rounded v-bind="attrs" v-on="on"></v-btn>
+      <v-row>
+        <v-col sm="3">
+          {{ name }}
+        </v-col>
+        <v-col>
+          <v-btn :color="color" rounded v-bind="attrs" v-on="on"></v-btn>
+        </v-col>
+      </v-row>
     </template>
     <v-card>
       <v-color-picker

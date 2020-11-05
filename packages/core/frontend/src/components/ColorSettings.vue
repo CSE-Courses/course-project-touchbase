@@ -1,17 +1,20 @@
 <template>
   <div>
-    <v-switch v-model="$vuetify.theme.dark" :label="`Dark Mode`" @click="save"></v-switch>
     <v-row>
-      <ColorPicker name="Primary Color" color="primary" dark="light" @save="save"></ColorPicker>
-    </v-row>
-    <v-row>
-      <ColorPicker name="Secondary Color" color="secondary" @save="save"></ColorPicker>
-    </v-row>
-    <v-row>
-      <ColorPicker name="Accent Color" color="accent" @save="save"></ColorPicker>
-    </v-row>
-    <v-row>
-      <ColorPicker name="Background Color" color="background" @save="save"></ColorPicker>
+      <v-col>
+        <v-switch v-model="$vuetify.theme.dark" label="Dark Mode" @click="save"></v-switch>
+      </v-col>
+      <v-col>
+        <v-row>
+          <ColorPicker name="Primary Color" color="primary" dark="light" @save="save"></ColorPicker>
+        </v-row>
+        <v-row>
+          <ColorPicker name="Secondary Color" color="secondary" @save="save"></ColorPicker>
+        </v-row>
+        <v-row>
+          <ColorPicker name="Accent Color" color="accent" @save="save"></ColorPicker>
+        </v-row>
+      </v-col>
     </v-row>
   </div>
 </template>
