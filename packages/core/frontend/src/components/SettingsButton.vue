@@ -1,15 +1,15 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" fullscreen :close-on-content-click="dialog" offset-y="50">
+    <v-dialog v-model="dialog" fullscreen :close-on-content-click="dialog">
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
       <template v-slot:activator="{ on, attrs }">
-        <v-avatar id="Logo" rounded v-bind="attrs" v-on="on">
-          <v-img alt="TouchBase Logo" src="@/assets/logo.svg" transition="scale-transition" />
-        </v-avatar>
+        <v-btn icon x-large color="accent" v-bind="attrs" v-on="on">
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
       </template>
       <v-card min-width="250">
         <AccountPopup></AccountPopup>
