@@ -61,7 +61,13 @@
               @keydown.enter="submitCollection"
             ></v-text-field>
           </v-card-text>
-
+          <v-autocomplete
+            v-model="parentCollection"
+            :items="collectionNames"
+            dense
+            filled
+            label="Parent Collection"
+          ></v-autocomplete>
           <v-card-actions>
             <v-spacer></v-spacer>
 
@@ -89,6 +95,13 @@
               :rules="[(val) => !!val || 'Resource name is required']"
               @keydown.enter="submitResource"
             ></v-text-field>
+            <v-autocomplete
+              v-model="parentCollection"
+              :items="collectionNames"
+              dense
+              filled
+              label="Parent Collection"
+            ></v-autocomplete>
             <v-select
               v-model="resourceType"
               label="Resource type"
@@ -146,6 +159,8 @@ export default class AddButton extends Vue {
 
   collectionName = "";
 
+  parentCollection = "";
+
   showResourceDialog = false;
 
   resourceName = "";
@@ -157,6 +172,26 @@ export default class AddButton extends Vue {
   resourceData = "";
 
   resourceFieldsComponent: Vue | null = null;
+
+  collections: { name: string,
+    id: number,
+    }[] = [];
+
+  get collectionNames(): string[] {
+    return this.collections.map(collection => collection.name)
+  }
+
+  async pullCollections(): Promise<void> {
+    const authRes = await api.reAuthenticate();
+
+    this.collections = (
+      await collectionsService.find({
+        query: {
+          ownerID: authRes.user.id,
+        },
+      })
+    ).data;
+  }
 
   @Watch("resourceType")
   async onTypeChanged() {
@@ -178,7 +213,7 @@ export default class AddButton extends Vue {
       type: this.resourceType,
       data: this.resourceData,
       ownerID: userID.user.id,
-      // collectionID: ,
+      collectionID: this.collections.find(collection => collection.name === this.parentCollection)?.id,
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
@@ -193,8 +228,16 @@ export default class AddButton extends Vue {
     this.$root.$emit("collection-refresh-needed");
     await collectionsService.create({
       name: this.collectionName,
+      collectionID: this.collections.find(collection => collection.name === this.parentCollection)?.id,
     });
     this.collectionForm.reset();
+  }
+
+  mounted(): void {
+    this.pullCollections();
+    this.$root.$on("collection-refresh-needed", () => {
+      this.pullCollections();
+    });
   }
 }
 </script>

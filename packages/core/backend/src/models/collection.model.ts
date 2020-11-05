@@ -28,10 +28,10 @@ export default class Collection extends Model implements Collection {
 
   @ForeignKey(() => Collection)
   @Column
-  collectionID!: number;
+  collectionID?: number;
 
   @BelongsTo(() => Collection)
-  collection!: Collection;
+  collection?: Collection;
 
   @HasMany(() => Resource)
   resources?: Resource[];
