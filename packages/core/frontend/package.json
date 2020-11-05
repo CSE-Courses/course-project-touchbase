@@ -11,7 +11,7 @@
     "lint": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service lint",
     "precommit": "lint-staged",
     "start": "npm run serve",
-    "test": "npm run test:unit && npm run test:e2e -- --headless"
+    "test": "npm run test:unit && cross-env VUE_NIGHTWATCH_HEADLESS=1 npm run test:e2e"
   },
   "dependencies": {
     "@feathersjs/authentication-client": "^4.5.8",

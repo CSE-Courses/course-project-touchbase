@@ -7,7 +7,7 @@
         </v-btn>
       </v-toolbar>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn icon x-large color="accent" v-bind="attrs" v-on="on">
+        <v-btn icon x-large color="accent" v-bind="attrs" v-on="on" id="settings-button">
           <v-icon>mdi-settings</v-icon>
         </v-btn>
       </template>

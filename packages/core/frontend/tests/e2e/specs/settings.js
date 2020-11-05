@@ -8,8 +8,8 @@ module.exports = {
       .setValue("#password", "password")
       .click("#login")
       .waitForElementVisible("#app")
-      .assert.elementPresent("#Logo")
-      .click("#Logo")
+      .assert.elementPresent("#settings-button")
+      .click("#settings-button")
       .assert.containsText("#app", "Account Settings")
       .assert.containsText("#app", "Color Settings")
       .end();
