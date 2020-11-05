@@ -35,8 +35,8 @@ export default class extends Vue {
     });
     if (settingsData.data.length > 0) {
       const settings = settingsData.data[0];
+      this.$vuetify.theme.themes = JSON.parse(settings.color);
       this.$vuetify.theme.dark = settings.darkmode;
-      this.$vuetify.theme.themes.light.primary = settings.color;
     }
   }
 
