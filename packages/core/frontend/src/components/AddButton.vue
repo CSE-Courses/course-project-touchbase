@@ -123,7 +123,7 @@
             <v-btn
               depressed
               color="primary"
-              :disabled="!(resourceName !== '' && resourceType !== null && resourceData !== '')"
+              :disabled="!(resourceName !== '' && resourceType !== null && (!resourceFieldsComponent || resourceData !== ''))"
               @click="submitResource"
             >
               Submit
@@ -165,7 +165,7 @@ export default class AddButton extends Vue {
 
   resourceName = "";
 
-  resourceTypes = ["Hyperlink"];
+  resourceTypes = ["Hyperlink", "ToDoList"];
 
   resourceType = "";
 
@@ -196,9 +196,11 @@ export default class AddButton extends Vue {
   @Watch("resourceType")
   async onTypeChanged() {
     if (this.resourceType)
-      this.resourceFieldsComponent = (
-        await import(`./resource-creation-fields/${this.resourceType}`)
-      ).default;
+      try {
+        this.resourceFieldsComponent = (
+          await import(`./resource-creation-fields/${this.resourceType}`)
+        ).default;
+      } catch {console.log("secret dev secrets")}
     else this.resourceFieldsComponent = null;
   }
 
