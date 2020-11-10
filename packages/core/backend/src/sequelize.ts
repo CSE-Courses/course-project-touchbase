@@ -3,9 +3,13 @@ import { Sequelize } from "sequelize-typescript";
 import { Application } from "./declarations";
 
 export default function configureSequelize(app: Application): void {
+  const testDbId = process.env.JEST_WORKER_ID
+    ? `backend-unit-${process.env.JEST_WORKER_ID}`
+    : process.env.TEST_DB_ID;
+
   const connectionString =
     process.env.NODE_ENV === "test"
-      ? `sqlite://./data/testdb-${process.env.JEST_WORKER_ID}.sqlite`
+      ? `sqlite://./data/testdb-${testDbId}.sqlite`
       : app.get("sqlite");
 
   const sequelize = new Sequelize(connectionString, {
