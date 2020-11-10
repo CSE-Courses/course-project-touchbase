@@ -207,7 +207,6 @@ export default class AddButton extends Vue {
     if (!this.resourceForm.validate()) return;
 
     const userID = await api.reAuthenticate();
-    this.$root.$emit("resource-refresh-needed");
     const resource = await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,
@@ -217,7 +216,7 @@ export default class AddButton extends Vue {
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
-    this.$router.push(`/app/resource/${resource.id}`);
+    this.$root.$emit("resource-refresh-needed");
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -225,12 +224,12 @@ export default class AddButton extends Vue {
     if (!this.collectionForm.validate()) return;
 
     this.showCollectionDialog = false;
-    this.$root.$emit("collection-refresh-needed");
     await collectionsService.create({
       name: this.collectionName,
       collectionID: this.collections.find(collection => collection.name === this.parentCollection)?.id,
     });
     this.collectionForm.reset();
+    this.$root.$emit("collection-refresh-needed");
   }
 
   mounted(): void {

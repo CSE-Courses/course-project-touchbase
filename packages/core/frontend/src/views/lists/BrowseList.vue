@@ -3,7 +3,11 @@
   <v-list>
     <v-subheader inset>Collections</v-subheader>
 
-    <v-list-item v-for="collection in collections" :key="`collection:${collection.name}`">
+    <v-list-item
+      v-for="collection in collections"
+      :key="`collection:${collection.name}`"
+      :to="`/app/browse/${collection.id}`"
+    >
       <v-list-item-avatar>
         <v-icon class="grey lighten-1" dark>mdi-folder</v-icon>
       </v-list-item-avatar>
@@ -23,7 +27,11 @@
 
     <v-subheader inset>Files</v-subheader>
 
-    <v-list-item v-for="resource in resources" :key="`resource:${resource.name}`">
+    <v-list-item
+      v-for="resource in resources"
+      :key="`resource:${resource.name}`"
+      :to="`/app/resource/${resource.id}`"
+    >
       <v-list-item-avatar>
         <v-icon class="blue" dark>mdi-file-document</v-icon>
       </v-list-item-avatar>
@@ -42,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "@/api";
 
@@ -51,10 +59,11 @@ const collectionsService = api.service("collections");
 
 @Component
 export default class BrowseList extends Vue {
-  collections: { name: string }[] = [];
+  collections: { name: string; id: number }[] = [];
 
-  resources: { name: string }[] = [];
+  resources: { name: string; id: number }[] = [];
 
+  @Watch("$route")
   async pullCollections(): Promise<void> {
     const authRes = await api.reAuthenticate();
 
@@ -62,11 +71,13 @@ export default class BrowseList extends Vue {
       await collectionsService.find({
         query: {
           ownerID: authRes.user.id,
+          collectionID: this.$route.params.collectionID || null,
         },
       })
     ).data;
   }
 
+  @Watch("$route")
   async pullResources(): Promise<void> {
     const authRes = await api.reAuthenticate();
 
@@ -74,6 +85,7 @@ export default class BrowseList extends Vue {
       await resourceService.find({
         query: {
           ownerID: authRes.user.id,
+          collectionID: this.$route.params.collectionID || null,
         },
       })
     ).data;
