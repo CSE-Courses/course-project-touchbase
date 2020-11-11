@@ -57,8 +57,7 @@ export default class ToDoList extends Vue {
 
   mounted() {
     if (!(this.data === "")) {
-      this.items = JSON.parse(this.data)[0];
-      this.status = JSON.parse(this.data)[1];
+      [this.items, this.status] = JSON.parse(this.data);
     }
   }
 
