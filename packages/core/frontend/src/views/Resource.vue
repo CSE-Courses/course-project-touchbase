@@ -1,11 +1,11 @@
 <template>
   <div style="margin: 1rem">
-    <v-breadcrumbs :items="path"></v-breadcrumbs>
     <component
       :is="resourceComponent"
       v-if="resourceComponent"
       :data="resourceData"
       :name="resourceName"
+      @changed="updateResource"
     ></component>
   </div>
 </template>
@@ -34,7 +34,12 @@ export default class Resource extends Vue {
   resourceComponent: typeof Vue | null = null;
 
   async created() {
-    this.fetchData();
+    await this.fetchData();
+  }
+
+  async updateResource(JSON: string) {
+    resourcesService.patch(this.$route.params.id, {data: JSON});
+    await this.fetchData();
   }
 
   @Watch("$route")

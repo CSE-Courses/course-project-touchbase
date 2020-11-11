@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>{{ name }}</h1>
     <v-btn :href="data">Go To {{ name }}</v-btn>
   </div>
 </template>
