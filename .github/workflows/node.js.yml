@@ -26,6 +26,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
       run: npm install
+    - name: Typecheck
+      run: npx lerna run typecheck
     - name: Lint
       run: npx lerna run lint
     - name: Test

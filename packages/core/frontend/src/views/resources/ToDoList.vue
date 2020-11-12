@@ -36,10 +36,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import api from "@/api";
-
-const resourceService = api.service("resources");
 
 @Component
 export default class ToDoList extends Vue {
@@ -51,22 +47,22 @@ export default class ToDoList extends Vue {
 
   todos: { title: string; checked: boolean }[] = [];
 
-  mounted() {
+  mounted(): void {
     if (!(this.data === "")) {
       this.todos = JSON.parse(this.data).todos;
     }
   }
 
-  convertDataToJSON() {
+  convertDataToJSON(): string {
     return JSON.stringify({ todos: this.todos });
   }
 
-  notifyUpdate() {
+  notifyUpdate(): void {
     const toSend = this.convertDataToJSON();
     this.$emit("changed", toSend);
   }
 
-  async newItem() {
+  async newItem(): Promise<void> {
     this.todos.push({ title: this.newItemName, checked: false });
     this.newItemName = "";
     this.notifyUpdate();

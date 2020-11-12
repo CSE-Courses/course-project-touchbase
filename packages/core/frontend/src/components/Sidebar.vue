@@ -31,13 +31,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import api from "@/api";
-
-const collectionsService = api.service("collections");
 
 @Component
 export default class Sidebar extends Vue {
-  @Prop({ default: true }) toggle;
+  @Prop({ default: true }) toggle!: boolean;
 }
 </script>

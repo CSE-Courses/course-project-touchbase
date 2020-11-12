@@ -7,10 +7,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import api from "@/api";
-
-const resourceService = api.service("resources");
 
 @Component
 export default class Hyperlink extends Vue {

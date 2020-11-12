@@ -60,11 +60,15 @@
               :rules="[(val) => !!val || 'Collection name is required']"
               @keydown.enter="submitCollection"
             ></v-text-field>
-            <v-autocomplete
-              v-model="parentCollection"
-              :items="collectionNames"
-              label="Parent Collection"
-            ></v-autocomplete>
+            Parent collection
+            <v-treeview
+              :active.sync="activeCollections"
+              :items="collectionTree"
+              :load-children="fetchChildCollections"
+              activatable
+              color="primary"
+              transition
+            />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -93,11 +97,15 @@
               :rules="[(val) => !!val || 'Resource name is required']"
               @keydown.enter="submitResource"
             ></v-text-field>
-            <v-autocomplete
-              v-model="parentCollection"
-              :items="collectionNames"
-              label="Parent Collection"
-            ></v-autocomplete>
+            Parent collection
+            <v-treeview
+              :active.sync="activeCollections"
+              :items="collectionTree"
+              :load-children="fetchChildCollections"
+              activatable
+              color="primary"
+              transition
+            />
             <v-select
               v-model="resourceType"
               label="Resource type"
@@ -147,6 +155,12 @@ const collectionsService = api.service("collections");
 
 const resourceService = api.service("resources");
 
+interface CollectionTreeNode {
+  name: string;
+  id: number;
+  children?: CollectionTreeNode[];
+}
+
 @Component({
   components: {},
 })
@@ -175,26 +189,40 @@ export default class AddButton extends Vue {
 
   resourceFieldsComponent: Vue | null = null;
 
-  collections: { name: string; id: number }[] = [];
+  activeCollections: CollectionTreeNode[] = [];
 
-  get collectionNames(): string[] {
-    return this.collections.map((collection) => collection.name);
+  collectionTree: CollectionTreeNode[] = [];
+
+  @Watch("showResourceDialog")
+  @Watch("showCollectionDialog")
+  async refreshBaseTree(): Promise<void> {
+    this.collectionTree = (await this.getCollections(null)) || [];
   }
 
-  async pullCollections(): Promise<void> {
-    const authRes = await api.reAuthenticate();
+  async fetchChildCollections(collection: CollectionTreeNode): Promise<void> {
+    // We need to reassign so that we can mark it as null if there's nothing there,
+    // so that the arrow goes away
+    // eslint-disable-next-line no-param-reassign
+    collection.children = await this.getCollections(collection.id);
+  }
 
-    this.collections = (
+  async getCollections(parentID: number | null): Promise<CollectionTreeNode[] | undefined> {
+    const authRes = await api.reAuthenticate();
+    const collections: Omit<CollectionTreeNode, "children">[] = (
       await collectionsService.find({
         query: {
           ownerID: authRes.user.id,
+          collectionID: parentID,
         },
       })
     ).data;
+    return collections.length
+      ? collections.map((collection) => ({ ...collection, children: [] }))
+      : undefined;
   }
 
   @Watch("resourceType")
-  async onTypeChanged() {
+  async onTypeChanged(): Promise<void> {
     if (this.resourceType)
       try {
         this.resourceFieldsComponent = (
@@ -206,43 +234,32 @@ export default class AddButton extends Vue {
     else this.resourceFieldsComponent = null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async submitResource() {
+  async submitResource(): Promise<void> {
     if (!this.resourceForm.validate()) return;
 
     const userID = await api.reAuthenticate();
-    const resource = await resourceService.create({
+    await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,
       data: this.resourceData,
       ownerID: userID.user.id,
-      collectionID: this.collections.find((collection) => collection.name === this.parentCollection)
-        ?.id,
+      collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
     this.$root.$emit("resource-refresh-needed");
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async submitCollection() {
+  async submitCollection(): Promise<void> {
     if (!this.collectionForm.validate()) return;
 
     this.showCollectionDialog = false;
     await collectionsService.create({
       name: this.collectionName,
-      collectionID: this.collections.find((collection) => collection.name === this.parentCollection)
-        ?.id,
+      collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
     });
     this.collectionForm.reset();
     this.$root.$emit("collection-refresh-needed");
-  }
-
-  mounted(): void {
-    this.pullCollections();
-    this.$root.$on("collection-refresh-needed", () => {
-      this.pullCollections();
-    });
   }
 }
 </script>

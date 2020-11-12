@@ -22,11 +22,7 @@ describe("'users' service", () => {
       provider: "rest",
     });
 
-    if (Array.isArray(res)) {
-      expect(res[0].email).toBeUndefined();
-    } else {
-      fail("Pagination was disabled, but we didn't get an array");
-    }
+    expect(Array.isArray(res) && res[0].email).toBeUndefined();
   });
 
   it("allows access to the user email field after logged in", async () => {
@@ -45,6 +41,6 @@ describe("'users' service", () => {
       authentication: { strategy: "jwt", accessToken },
     });
 
-    expect(res[0].email).toBeDefined();
+    expect(Array.isArray(res) && res[0].email).toBeDefined();
   });
 });
