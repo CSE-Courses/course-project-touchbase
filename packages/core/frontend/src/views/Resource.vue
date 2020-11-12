@@ -1,12 +1,16 @@
 <template>
   <div style="margin: 1rem">
     <v-breadcrumbs :items="path"></v-breadcrumbs>
-    <component
-      :is="resourceComponent"
-      v-if="resourceComponent"
-      :data="resourceData"
-      :name="resourceName"
-    ></component>
+    <v-row>
+      <v-col>
+        <component
+          :is="resourceComponent"
+          v-if="resourceComponent"
+          :data="resourceData"
+          :name="resourceName"
+        ></component>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -14,7 +18,7 @@
 import { Vue, Component, Watch } from "vue-property-decorator";
 import api from "@/api";
 
-const resourcesService = api.service("resources");
+const resourceService = api.service("resources");
 
 @Component
 export default class Resource extends Vue {
@@ -34,12 +38,12 @@ export default class Resource extends Vue {
   resourceComponent: typeof Vue | null = null;
 
   async created() {
-    this.fetchData();
+    await this.fetchData();
   }
 
   @Watch("$route")
   async fetchData() {
-    const resource = await resourcesService.get(this.$route.params.id);
+    const resource = await resourceService.get(this.$route.params.id);
     // TODO: Update with full collection path
     this.path = [{ text: resource.name }];
     this.resourceName = resource.name;
