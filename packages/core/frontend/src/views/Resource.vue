@@ -8,6 +8,7 @@
           v-if="resourceComponent"
           :data="resourceData"
           :name="resourceName"
+          @changed="updateResource"
         ></component>
       </v-col>
     </v-row>
@@ -38,6 +39,11 @@ export default class Resource extends Vue {
   resourceComponent: typeof Vue | null = null;
 
   async created() {
+    await this.fetchData();
+  }
+
+  async updateResource(JSON: string) {
+    resourceService.patch(this.$route.params.id, { data: JSON });
     await this.fetchData();
   }
 

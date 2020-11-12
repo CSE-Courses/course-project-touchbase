@@ -39,6 +39,5 @@ const collectionsService = api.service("collections");
 @Component
 export default class Sidebar extends Vue {
   @Prop({ default: true }) toggle;
-
 }
 </script>

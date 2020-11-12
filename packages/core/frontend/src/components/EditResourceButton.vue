@@ -19,10 +19,7 @@
             ></component>
           </v-card-text>
           <v-card-actions>
-            <v-btn
-              depressed color="red" text @click="deleteResource">
-              Delete
-            </v-btn>
+            <v-btn depressed color="red" text @click="deleteResource"> Delete </v-btn>
 
             <v-spacer></v-spacer>
 
@@ -42,14 +39,14 @@
 </template>
 
 <script lang="ts">
-import {Vue, Component, Watch, Prop} from "vue-property-decorator";
+import { Vue, Component, Watch, Prop } from "vue-property-decorator";
 import api from "@/api";
 
 const resourceService = api.service("resources");
 
 @Component
 export default class EditResourceButton extends Vue {
-  @Prop() id!: number
+  @Prop() id!: number;
 
   dialog = false;
 
@@ -77,8 +74,8 @@ export default class EditResourceButton extends Vue {
   }
 
   async deleteResource() {
-    await resourceService.remove(this.id)
-    this.dialog = false
+    await resourceService.remove(this.id);
+    this.dialog = false;
     this.$root.$emit("resource-refresh-needed");
   }
 

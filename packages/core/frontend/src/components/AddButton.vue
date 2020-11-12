@@ -119,7 +119,13 @@
             <v-btn
               depressed
               color="primary"
-              :disabled="!(resourceName !== '' && resourceType !== null && resourceData !== '')"
+              :disabled="
+                !(
+                  resourceName !== '' &&
+                  resourceType !== null &&
+                  (!resourceFieldsComponent || resourceData !== '')
+                )
+              "
               @click="submitResource"
             >
               Submit
@@ -161,7 +167,7 @@ export default class AddButton extends Vue {
 
   resourceName = "";
 
-  resourceTypes = ["Hyperlink"];
+  resourceTypes = ["Hyperlink", "ToDoList"];
 
   resourceType = "";
 
@@ -169,12 +175,10 @@ export default class AddButton extends Vue {
 
   resourceFieldsComponent: Vue | null = null;
 
-  collections: { name: string,
-    id: number,
-    }[] = [];
+  collections: { name: string; id: number }[] = [];
 
   get collectionNames(): string[] {
-    return this.collections.map(collection => collection.name)
+    return this.collections.map((collection) => collection.name);
   }
 
   async pullCollections(): Promise<void> {
@@ -192,9 +196,13 @@ export default class AddButton extends Vue {
   @Watch("resourceType")
   async onTypeChanged() {
     if (this.resourceType)
-      this.resourceFieldsComponent = (
-        await import(`./resource-creation-fields/${this.resourceType}`)
-      ).default;
+      try {
+        this.resourceFieldsComponent = (
+          await import(`./resource-creation-fields/${this.resourceType}`)
+        ).default;
+      } catch {
+        // do nothing
+      }
     else this.resourceFieldsComponent = null;
   }
 
@@ -208,7 +216,8 @@ export default class AddButton extends Vue {
       type: this.resourceType,
       data: this.resourceData,
       ownerID: userID.user.id,
-      collectionID: this.collections.find(collection => collection.name === this.parentCollection)?.id,
+      collectionID: this.collections.find((collection) => collection.name === this.parentCollection)
+        ?.id,
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
@@ -222,7 +231,8 @@ export default class AddButton extends Vue {
     this.showCollectionDialog = false;
     await collectionsService.create({
       name: this.collectionName,
-      collectionID: this.collections.find(collection => collection.name === this.parentCollection)?.id,
+      collectionID: this.collections.find((collection) => collection.name === this.parentCollection)
+        ?.id,
     });
     this.collectionForm.reset();
     this.$root.$emit("collection-refresh-needed");
