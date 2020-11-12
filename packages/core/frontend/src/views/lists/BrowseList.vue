@@ -16,6 +16,10 @@
         <v-list-item-title v-text="collection.name"></v-list-item-title>
       </v-list-item-content>
 
+      <v-list-item-action>
+        <EditCollectionButton :id="collection.id"></EditCollectionButton>
+      </v-list-item-action>
+
       <!--v-list-item-action>
           <v-btn icon>
             <v-icon color="grey lighten-1">mdi-information</v-icon>
@@ -30,6 +34,7 @@
     <v-list-item
       v-for="resource in resources"
       :key="`resource:${resource.name}`"
+      selectable
       :to="`/app/resource/${resource.id}`"
     >
       <v-list-item-avatar>
@@ -40,7 +45,11 @@
         <v-list-item-title v-text="resource.name"></v-list-item-title>
       </v-list-item-content>
 
-      <!--v-list-item-action>
+      <v-list-item-action>
+        <EditResourceButton :id="resource.id"></EditResourceButton>
+      </v-list-item-action>
+
+      <!--\v-list-item-action>
           <v-btn icon>
             <v-icon color="grey lighten-1">mdi-information</v-icon>
           </v-btn>
@@ -53,11 +62,14 @@
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "@/api";
+import EditResourceButton from "@/components/EditResourceButton.vue";
+import EditCollectionButton from "@/components/EditCollectionButton.vue";
 
 const resourceService = api.service("resources");
 const collectionsService = api.service("collections");
-
-@Component
+@Component({
+  components: { EditCollectionButton, EditResourceButton },
+})
 export default class BrowseList extends Vue {
   collections: { name: string; id: number }[] = [];
 

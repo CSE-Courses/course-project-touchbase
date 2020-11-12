@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ name }}</h1>
-    <v-btn :href="data">Go To {{ name }}</v-btn>
+    <v-btn :href="data" target="_blank">Go To {{ name }}</v-btn>
   </div>
 </template>
 
