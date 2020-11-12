@@ -60,14 +60,12 @@
               :rules="[(val) => !!val || 'Collection name is required']"
               @keydown.enter="submitCollection"
             ></v-text-field>
+            <v-autocomplete
+              v-model="parentCollection"
+              :items="collectionNames"
+              label="Parent Collection"
+            ></v-autocomplete>
           </v-card-text>
-          <v-autocomplete
-            v-model="parentCollection"
-            :items="collectionNames"
-            dense
-            filled
-            label="Parent Collection"
-          ></v-autocomplete>
           <v-card-actions>
             <v-spacer></v-spacer>
 
@@ -98,8 +96,6 @@
             <v-autocomplete
               v-model="parentCollection"
               :items="collectionNames"
-              dense
-              filled
               label="Parent Collection"
             ></v-autocomplete>
             <v-select
