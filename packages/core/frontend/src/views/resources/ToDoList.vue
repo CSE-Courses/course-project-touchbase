@@ -1,25 +1,23 @@
 <template>
   <div>
     <v-list flat one-line>
-      <v-list-item-group multiple>
-        <v-subheader class="text-uppercase">{{ name }}</v-subheader>
+      <v-subheader class="text-uppercase">{{ name }}</v-subheader>
 
-        <v-list-item v-for="(item, index) in items" :key="item">
-          <template>
-            <v-list-item-action>
-              <v-checkbox
-                v-model="status[index]"
-                color="primary"
-                @change="updateStatus(index)"
-              ></v-checkbox>
-            </v-list-item-action>
+      <v-list-item v-for="todo in todos" :key="todo">
+        <template>
+          <v-list-item-action>
+            <v-checkbox
+              v-model="todo.checked"
+              color="primary"
+              @change="notifyUpdate()"
+            ></v-checkbox>
+          </v-list-item-action>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item }}</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-      </v-list-item-group>
+          <v-list-item-content>
+            <v-list-item-title>{{ todo.title }}</v-list-item-title>
+          </v-list-item-content>
+        </template>
+      </v-list-item>
     </v-list>
 
     <v-row cols="3">
@@ -51,31 +49,27 @@ export default class ToDoList extends Vue {
 
   @Prop() data!: string;
 
-  items: string[] = [];
-
-  status: boolean[] = [];
+  todos: { title: string; checked: boolean }[] = [];
 
   mounted() {
     if (!(this.data === "")) {
-      [this.items, this.status] = JSON.parse(this.data);
+      this.todos = JSON.parse(this.data).todos;
     }
   }
 
-  async convertDataToJSON() {
-    return JSON.stringify([this.items, this.status]);
+  convertDataToJSON() {
+    return JSON.stringify({ todos: this.todos });
   }
 
-  async updateStatus(index: number) {
-    const toSend = await this.convertDataToJSON();
+  notifyUpdate() {
+    const toSend = this.convertDataToJSON();
     this.$emit("changed", toSend);
   }
 
   async newItem() {
-    this.items.push(this.newItemName);
-    this.newItemName = ""
-    this.status.push(false);
-    const toSend = await this.convertDataToJSON();
-    this.$emit("changed", toSend);
+    this.todos.push({ title: this.newItemName, checked: false });
+    this.newItemName = "";
+    this.notifyUpdate();
   }
 }
 </script>
