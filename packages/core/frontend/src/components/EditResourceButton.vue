@@ -26,7 +26,13 @@
             <v-btn
               depressed
               color="primary"
-              :disabled="!(resourceName !== '' && resourceData !== '')"
+              :disabled="
+                !(
+                  resourceName !== '' &&
+                  resourceType !== null &&
+                  (!resourceFieldsComponent || resourceData !== '')
+                )
+              "
               @click="updateResource"
             >
               Submit
@@ -88,9 +94,13 @@ export default class EditResourceButton extends Vue {
     this.resourceType = resource.type;
     this.resourceComponent = (await import(`../views/resources/${resource.type}`)).default;
     if (this.resourceType)
-      this.resourceFieldsComponent = (
-        await import(`./resource-creation-fields/${this.resourceType}`)
-      ).default;
+      try {
+        this.resourceFieldsComponent = (
+          await import(`./resource-creation-fields/${this.resourceType}`)
+        ).default;
+      } catch {
+        this.resourceFieldsComponent = null;
+      }
     else this.resourceFieldsComponent = null;
   }
 }

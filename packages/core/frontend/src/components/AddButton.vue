@@ -201,7 +201,7 @@ export default class AddButton extends Vue {
           await import(`./resource-creation-fields/${this.resourceType}`)
         ).default;
       } catch {
-        // do nothing
+        this.resourceFieldsComponent = null;
       }
     else this.resourceFieldsComponent = null;
   }

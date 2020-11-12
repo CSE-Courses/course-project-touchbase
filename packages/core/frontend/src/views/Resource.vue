@@ -1,6 +1,5 @@
 <template>
   <div style="margin: 1rem">
-    <v-breadcrumbs :items="path"></v-breadcrumbs>
     <v-row>
       <v-col>
         <component
