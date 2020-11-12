@@ -30,9 +30,12 @@ export default class Collection extends Model implements Collection {
   @Column
   collectionID?: number;
 
-  @BelongsTo(() => Collection)
-  collection?: Collection;
+  @BelongsTo(() => Collection, { onDelete: "CASCADE" })
+  parentCollection?: Collection;
 
   @HasMany(() => Resource)
   resources?: Resource[];
+
+  @HasMany(() => Collection)
+  collections?: Collection[];
 }

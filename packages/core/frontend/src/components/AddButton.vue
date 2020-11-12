@@ -60,7 +60,7 @@
               :rules="[(val) => !!val || 'Collection name is required']"
               @keydown.enter="submitCollection"
             ></v-text-field>
-            Parent collection
+            <template v-if="collectionTree.length">Parent collection</template>
             <v-treeview
               :active.sync="activeCollections"
               :items="collectionTree"
@@ -97,7 +97,7 @@
               :rules="[(val) => !!val || 'Resource name is required']"
               @keydown.enter="submitResource"
             ></v-text-field>
-            Parent collection
+            <template v-if="collectionTree.length">Parent collection</template>
             <v-treeview
               :active.sync="activeCollections"
               :items="collectionTree"
@@ -195,7 +195,11 @@ export default class AddButton extends Vue {
 
   @Watch("showResourceDialog")
   @Watch("showCollectionDialog")
-  async refreshBaseTree(): Promise<void> {
+  async refreshTree(): Promise<void> {
+    this.activeCollections = [];
+    // Immediately clear it, eg in case we've deleted a collection so that we don't have a period
+    // with invalid data
+    this.collectionTree = [];
     this.collectionTree = (await this.getCollections(null)) || [];
   }
 
@@ -207,7 +211,7 @@ export default class AddButton extends Vue {
   }
 
   async getCollections(parentID: number | null): Promise<CollectionTreeNode[] | undefined> {
-    const authRes = await api.reAuthenticate();
+    const authRes = await api.get("authentication");
     const collections: Omit<CollectionTreeNode, "children">[] = (
       await collectionsService.find({
         query: {
@@ -237,7 +241,7 @@ export default class AddButton extends Vue {
   async submitResource(): Promise<void> {
     if (!this.resourceForm.validate()) return;
 
-    const userID = await api.reAuthenticate();
+    const userID = await api.get("authentication");
     await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,

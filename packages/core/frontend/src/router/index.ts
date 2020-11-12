@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+import api from "@/api";
 
 Vue.use(VueRouter);
 
@@ -46,10 +47,16 @@ const router = new VueRouter({
 
 export default router;
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const publicPages = ["/login", "/register"];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("auth");
+
+  let loggedIn = true;
+  try {
+    await api.reAuthenticate();
+  } catch {
+    loggedIn = false;
+  }
 
   // trying to access a restricted page + not logged in
   // redirect to login page

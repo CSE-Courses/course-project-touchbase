@@ -2,7 +2,7 @@
   <div>
     <v-breadcrumbs :items="collectionPath"></v-breadcrumbs>
     <v-list>
-      <v-subheader inset>Collections</v-subheader>
+      <v-subheader v-if="collections.length" inset>Collections</v-subheader>
 
       <v-list-item
         v-for="collection in collections"
@@ -24,7 +24,7 @@
 
       <v-divider inset></v-divider>
 
-      <v-subheader inset>Files</v-subheader>
+      <v-subheader v-if="resources.length" inset>Files</v-subheader>
 
       <v-list-item
         v-for="resource in resources"
@@ -74,7 +74,7 @@ export default class BrowseList extends Vue {
 
   @Watch("$route")
   async pullCollections(): Promise<void> {
-    const authRes = await api.reAuthenticate();
+    const authRes = await api.get("authentication");
 
     this.collections = (
       await collectionsService.find({
@@ -88,7 +88,7 @@ export default class BrowseList extends Vue {
 
   @Watch("$route")
   async pullResources(): Promise<void> {
-    const authRes = await api.reAuthenticate();
+    const authRes = await api.get("authentication");
 
     this.resources = (
       await resourceService.find({

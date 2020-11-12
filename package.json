@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "concurrently --kill-others -n ui,api -c green,blue \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "typecheck": "lerna run typecheck --stream",
     "test": "lerna run test --stream",
     "lint": "lerna run lint --stream",
     "lint-fix": "lerna run lint --stream -- -- --fix",
