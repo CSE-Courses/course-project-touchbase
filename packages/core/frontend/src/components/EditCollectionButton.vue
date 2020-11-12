@@ -53,11 +53,11 @@ export default class EditCollectionButton extends Vue {
 
   collectionName = "";
 
-  async created() {
+  async created(): Promise<void> {
     await this.fetchData();
   }
 
-  async updateCollection() {
+  async updateCollection(): Promise<void> {
     await collectionsService.patch(this.id, {
       name: this.collectionName,
     });
@@ -65,14 +65,14 @@ export default class EditCollectionButton extends Vue {
     this.$root.$emit("collection-refresh-needed");
   }
 
-  async deleteCollection() {
+  async deleteCollection(): Promise<void> {
     await collectionsService.remove(this.id);
     this.dialog = false;
     this.$root.$emit("collection-refresh-needed");
   }
 
   @Watch("$route")
-  async fetchData() {
+  async fetchData(): Promise<void> {
     const resource = await collectionsService.get(this.id);
     // TODO: Update with full collection path
     this.collectionName = resource.name;

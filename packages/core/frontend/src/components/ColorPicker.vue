@@ -49,7 +49,7 @@ export default class ColorPicker extends Vue {
 
   model = this.$vuetify.theme.themes[this.darkOrLight()][this.color];
 
-  darkOrLight(): string {
+  darkOrLight(): "dark" | "light" {
     if (this.$vuetify.theme.dark) {
       return "dark";
     }

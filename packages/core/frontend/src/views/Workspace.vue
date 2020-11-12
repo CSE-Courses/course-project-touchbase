@@ -27,7 +27,7 @@ export default class extends Vue {
   toggle = true;
 
   async pullSettings(): Promise<void> {
-    const authRes = await api.reAuthenticate();
+    const authRes = await api.get("authentication");
     const settingsData = await settingsService.find({
       query: {
         ownerID: authRes.user.id,

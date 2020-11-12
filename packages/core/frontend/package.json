@@ -10,8 +10,9 @@
     "test:e2e:e2e": "wait-on \"http://localhost:3030\" && cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service test:e2e",
     "test:e2e:api": "cd ../backend && shx --silent rm data/testdb-frontend-e2e.sqlite || true && cross-env NODE_ENV=test TEST_DB_ID=frontend-e2e npm start",
     "test:e2e": "concurrently --success first --kill-others -n e2e,api -c green,blue \"npm run test:e2e:e2e\" \"npm run test:e2e:api\"",
+    "typecheck": "vti diagnostics",
     "lint": "cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service lint",
-    "precommit": "lint-staged",
+    "precommit": "npm run typecheck && lint-staged",
     "start": "npm run serve",
     "test": "npm run test:unit && cross-env VUE_NIGHTWATCH_HEADLESS=1 npm run test:e2e"
   },
@@ -64,6 +65,7 @@
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
     "typescript": "~4.0.2",
+    "vti": "^0.0.16",
     "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-template-compiler": "^2.6.12",
     "vuetify-loader": "^1.3.0",

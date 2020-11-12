@@ -9,15 +9,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Model, PropSync, Vue } from "vue-property-decorator";
-// eslint-disable-next-line import/extensions,import/no-unresolved
-import api from "@/api";
+import { Component, Model, Vue } from "vue-property-decorator";
 
 @Component
 export default class HyperlinkCreationFields extends Vue {
   urlValidators = [
-    (val: string) => !!val || "URL is required",
-    (val: string) =>
+    (val: string): boolean | string => !!val || "URL is required",
+    (val: string): boolean | string =>
       (val && (val.startsWith("http://") || val.startsWith("https://"))) ||
       "URL must start with http:// or https://",
   ];

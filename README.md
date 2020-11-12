@@ -11,6 +11,7 @@ Command center for your personal and professional resources
 * `npm test` to run all automated tests
 * `npm run lint` - run eslint in all packages
   * `npm run lint-fix` - run eslint in all packages, automatically applying fixes where possible
+* `npm run typecheck` - typecheck all packages
 * `npm run check-updates` - check all packages for dependency updates
 * `npm run dep-clean` - remove node_modules from root and all packages
 * `npm run dep-clean-hard` - runs dep-clean and also removes lockfiles (handy to make sure you're completely upgraded)

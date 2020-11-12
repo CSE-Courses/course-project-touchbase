@@ -11,7 +11,7 @@
     "jest": "jest  --forceExit",
     "build": "shx rm -rf lib/ && tsc",
     "clean": "shx --silent rm data/testdb-backend-*.sqlite || true",
-    "precommit": "lint-staged"
+    "precommit": "npm run typecheck && lint-staged"
   },
   "main": "src",
   "directories": {

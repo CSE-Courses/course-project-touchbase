@@ -37,17 +37,17 @@ export default class Resource extends Vue {
 
   resourceComponent: typeof Vue | null = null;
 
-  async created() {
+  async created(): Promise<void> {
     await this.fetchData();
   }
 
-  async updateResource(JSON: string) {
+  async updateResource(JSON: string): Promise<void> {
     resourceService.patch(this.$route.params.id, { data: JSON });
     await this.fetchData();
   }
 
   @Watch("$route")
-  async fetchData() {
+  async fetchData(): Promise<void> {
     const resource = await resourceService.get(this.$route.params.id);
     // TODO: Update with full collection path
     this.path = [{ text: resource.name }];

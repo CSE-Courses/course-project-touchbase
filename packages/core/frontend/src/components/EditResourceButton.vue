@@ -66,11 +66,11 @@ export default class EditResourceButton extends Vue {
 
   resourceFieldsComponent: Vue | null = null;
 
-  async created() {
+  async created(): Promise<void> {
     await this.fetchData();
   }
 
-  async updateResource() {
+  async updateResource(): Promise<void> {
     await resourceService.patch(this.id, {
       name: this.resourceName,
       data: this.resourceData,
@@ -79,14 +79,14 @@ export default class EditResourceButton extends Vue {
     this.$root.$emit("resource-refresh-needed");
   }
 
-  async deleteResource() {
+  async deleteResource(): Promise<void> {
     await resourceService.remove(this.id);
     this.dialog = false;
     this.$root.$emit("resource-refresh-needed");
   }
 
   @Watch("$route")
-  async fetchData() {
+  async fetchData(): Promise<void> {
     const resource = await resourceService.get(this.id);
     // TODO: Update with full collection path
     this.resourceName = resource.name;

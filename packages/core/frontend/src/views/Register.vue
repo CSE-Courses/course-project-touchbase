@@ -78,16 +78,16 @@ export default class Register extends Vue {
   loading = false;
 
   emailRules = [
-    (v: string): boolean => !!v || "E-mail is required",
-    (v: string): boolean => /.+@.+/.test(v) || "E-mail must be valid",
+    (v: string): string | boolean => !!v || "E-mail is required",
+    (v: string): string | boolean => /.+@.+/.test(v) || "E-mail must be valid",
   ];
 
   passwordRules = [
-    (v: string): boolean => !!v || "Password is required",
-    (v: string): boolean => v.length >= 8 || "Password must be more than 8 characters",
+    (v: string): string | boolean => !!v || "Password is required",
+    (v: string): string | boolean => v.length >= 8 || "Password must be more than 8 characters",
   ];
 
-  async submit() {
+  async submit(): Promise<void> {
     this.loading = true;
     try {
       await usersService.create({
@@ -98,12 +98,6 @@ export default class Register extends Vue {
       this.registerSuccess = true;
       this.registerFail = false;
       await this.$router.push("/login");
-
-      await api.authenticate({
-        strategy: "local",
-        email: this.email,
-        password: this.password,
-      });
     } catch (e) {
       // TODO: Display the error
       this.registerFail = true;

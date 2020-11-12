@@ -38,7 +38,7 @@ export default class ColorSettings extends Vue {
   color = this.$vuetify.theme.themes.light.primary;
 
   async save(): Promise<void> {
-    const user = await api.reAuthenticate();
+    const user = await api.get("authentication");
     const settingsData = await settingsService.find({
       query: {
         ownerID: user.user.id,

@@ -73,13 +73,13 @@ export default class Login extends Vue {
   loading = false;
 
   emailRules = [
-    (v: string): boolean => !!v || "E-mail is required",
-    (v: string): boolean => /.+@.+/.test(v) || "E-mail must be valid",
+    (v: string): string | boolean => !!v || "E-mail is required",
+    (v: string): string | boolean => /.+@.+/.test(v) || "E-mail must be valid",
   ];
 
-  passwordRules = [(v: string): boolean => !!v || "Password is required"];
+  passwordRules = [(v: string): string | boolean => !!v || "Password is required"];
 
-  async submit() {
+  async submit(): Promise<void> {
     this.loading = true;
     try {
       await api.authenticate({

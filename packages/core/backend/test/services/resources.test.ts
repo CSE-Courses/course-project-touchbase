@@ -40,7 +40,7 @@ describe("'resources' service", () => {
       paginate: false,
     });
 
-    expect(res[0].name).toBe(rescName);
+    expect(Array.isArray(res) && res[0].name).toBe(rescName);
   });
 
   it("doesn't allow another user to access", async () => {

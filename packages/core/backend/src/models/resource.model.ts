@@ -29,6 +29,6 @@ export default class Resource extends Model implements Resource {
   @Column
   collectionID!: number;
 
-  @BelongsTo(() => Collection)
+  @BelongsTo(() => Collection, { onDelete: "CASCADE" })
   collection!: Collection;
 }
