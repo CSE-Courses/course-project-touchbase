@@ -17,6 +17,9 @@ export default class Resource extends Model implements Resource {
   @Column
   data?: string;
 
+  @Column
+  date?: string;
+
   @AllowNull(false)
   @ForeignKey(() => User)
   @Column

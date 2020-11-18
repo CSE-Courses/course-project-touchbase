@@ -11,6 +11,7 @@
               :rules="[(val) => !!val || 'Resource name is required']"
               @keydown.enter="updateResource"
             ></v-text-field>
+            <DatePicker v-model="resourceDate"></DatePicker>
             <component
               :is="resourceFieldsComponent"
               v-if="resourceFieldsComponent"
@@ -47,10 +48,12 @@
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from "vue-property-decorator";
 import api from "@/api";
+import DatePicker from "@/components/DatePicker.vue";
 
 const resourceService = api.service("resources");
-
-@Component
+@Component({
+  components: { DatePicker },
+})
 export default class EditResourceButton extends Vue {
   @Prop() id!: number;
 
@@ -61,6 +64,8 @@ export default class EditResourceButton extends Vue {
   resourceData?: string;
 
   resourceType = "";
+
+  resourceDate = "";
 
   resourceComponent: typeof Vue | null = null;
 
@@ -74,6 +79,7 @@ export default class EditResourceButton extends Vue {
     await resourceService.patch(this.id, {
       name: this.resourceName,
       data: this.resourceData,
+      date: this.resourceDate,
     });
     this.dialog = false;
     this.$root.$emit("resource-refresh-needed");
@@ -92,6 +98,7 @@ export default class EditResourceButton extends Vue {
     this.resourceName = resource.name;
     this.resourceData = resource.data;
     this.resourceType = resource.type;
+    this.resourceDate = resource.date;
     this.resourceComponent = (await import(`../views/resources/${resource.type}`)).default;
     if (this.resourceType)
       try {
