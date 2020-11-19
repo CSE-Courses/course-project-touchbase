@@ -1,9 +1,5 @@
-<template>
-</template>
-
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import api from "@/api";
 
 @Component
 export default class Hyperlink extends Vue {
