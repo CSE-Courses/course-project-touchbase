@@ -35,7 +35,7 @@ export const protectAuthenticated = (...fields: string[]) => (context: HookConte
 export function assertIsOwner(context: HookContext) {
   if (!context.params.provider) return;
 
-  if (!(context.result.ownerID === context.params.user.id)) {
+  if (!(context.result.ownerID === context.params.user?.id)) {
     throw new Forbidden();
   }
 }
@@ -46,11 +46,11 @@ export function assertIsOwnerForFind(context: HookContext) {
 
   if (context.result.data) {
     context.result.data = context.result.data.filter(
-      (item: { ownerID: any }) => item.ownerID === context.params.user.id
+      (item: { ownerID: any }) => item.ownerID === context.params.user?.id
     );
   } else {
     context.result = context.result.filter(
-      (item: { ownerID: any }) => item.ownerID === context.params.user.id
+      (item: { ownerID: any }) => item.ownerID === context.params.user?.id
     );
   }
 }
@@ -60,6 +60,6 @@ export function attachUserToIncomingCreation(context: HookContext) {
   if (!context.params.provider) return;
 
   if (context.params.provider != null) {
-    context.data.ownerID = context.params.user.id;
+    context.data.ownerID = context.params.user?.id;
   }
 }

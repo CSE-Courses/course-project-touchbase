@@ -34,6 +34,6 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Sidebar extends Vue {
-  @Prop({ default: true }) toggle!: boolean;
+  @Prop() toggle!: boolean;
 }
 </script>

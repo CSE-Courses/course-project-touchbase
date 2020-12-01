@@ -106,6 +106,7 @@
               color="primary"
               transition
             />
+            <DatePicker v-model="resourceDate"></DatePicker>
             <v-select
               v-model="resourceType"
               label="Resource type"
@@ -150,6 +151,7 @@ import { Component, Ref, Vue, Watch } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "@/api";
 import { VForm } from "vuetify/lib";
+import DatePicker from "@/components/DatePicker.vue";
 
 const collectionsService = api.service("collections");
 
@@ -162,7 +164,7 @@ interface CollectionTreeNode {
 }
 
 @Component({
-  components: {},
+  components: { DatePicker },
 })
 export default class AddButton extends Vue {
   @Ref() resourceForm!: VForm;
@@ -186,6 +188,8 @@ export default class AddButton extends Vue {
   resourceType = "";
 
   resourceData = "";
+
+  resourceDate = "";
 
   resourceFieldsComponent: Vue | null = null;
 
@@ -240,12 +244,12 @@ export default class AddButton extends Vue {
 
   async submitResource(): Promise<void> {
     if (!this.resourceForm.validate()) return;
-
     const userID = await api.get("authentication");
     await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,
       data: this.resourceData,
+      date: this.resourceDate,
       ownerID: userID.user.id,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
     });
