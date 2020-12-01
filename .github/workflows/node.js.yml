@@ -25,10 +25,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
-      run: npm install
+      run: npm ci
     - name: Typecheck
-      run: npx lerna run typecheck
+      run: npm run typecheck
     - name: Lint
-      run: npx lerna run lint
+      run: npm run lint
     - name: Test
-      run: npx lerna run test
+      run: npm run test
