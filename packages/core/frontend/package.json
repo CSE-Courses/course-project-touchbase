@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e:e2e": "wait-on \"http://localhost:3030\" && vue-cli-service test:e2e",
+    "test:e2e:e2e": "wait-on \"http://localhost:3030\" && cross-env NODE_PRESERVE_SYMLINKS=1 vue-cli-service test:e2e",
     "test:e2e:api": "cd ../backend && shx --silent rm data/testdb-frontend-e2e.sqlite || true && cross-env NODE_ENV=test TEST_DB_ID=frontend-e2e npm start",
     "test:e2e": "concurrently --success first --kill-others -n e2e,api -c green,blue \"npm run test:e2e:e2e\" \"npm run test:e2e:api\"",
     "typecheck": "vti diagnostics",
