@@ -9,13 +9,13 @@
         <v-icon small> mdi-chevron-right </v-icon>
       </v-btn>
       <v-toolbar-title v-if="$refs.calendar">
-        {{ $refs.calendar.title }}
+        {{ calendar.title }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu bottom right>
         <template v-slot:activator="{ on, attrs }">
           <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
-            <span>{{ typeToLabel[type] }}</span>
+            <span>{{ typeToLabel.get(type) }}</span>
             <v-icon right> mdi-menu-down </v-icon>
           </v-btn>
         </template>
@@ -35,7 +35,7 @@
         </v-list>
       </v-menu>
     </v-toolbar>
-    <v-row>
+    <v-sheet height="600">
       <v-calendar
         ref="calendar"
         v-model="focus"
@@ -45,22 +45,25 @@
         @click:date="viewDay"
         @click:event="openEvent"
       ></v-calendar>
-    </v-row>
+    </v-sheet>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from "vue-property-decorator";
+import { Vue, Component, Watch, Ref } from "vue-property-decorator";
 import api from "@/api";
 import EditResourceButton from "@/components/EditResourceButton.vue";
 import EditCollectionButton from "@/components/EditCollectionButton.vue";
 import router from "@/router";
+import { VCalendar } from "vuetify/lib";
 
 const resourceService = api.service("resources");
 @Component({
   components: { EditCollectionButton, EditResourceButton },
 })
 export default class BrowseList extends Vue {
+  @Ref() calendar!: VCalendar;
+
   resources: { name: string; date: string; id: string }[] = [];
 
   events: { name: string; start: string; id: string }[] = [];
@@ -69,12 +72,12 @@ export default class BrowseList extends Vue {
 
   focus = "";
 
-  typeToLabel = {
-    month: "Month",
-    week: "Week",
-    day: "Day",
-    "4day": "4 Days",
-  };
+  typeToLabel = new Map([
+    ["month", "Month"],
+    ["week", "Week"],
+    ["day", "Day"],
+    ["4day", "4 Days"],
+  ]);
 
   viewDay({ date }: never): void {
     this.focus = date;
@@ -86,11 +89,11 @@ export default class BrowseList extends Vue {
   }
 
   prev(): void {
-    this.$refs.calendar.prev();
+    this.calendar.prev();
   }
 
   next(): void {
-    this.$refs.calendar.next();
+    this.calendar.next();
   }
 
   // eslint-disable-next-line
