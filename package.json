@@ -36,6 +36,8 @@
     }
   },
   "dependencies": {
+    "@types/showdown": "^1.9.3",
+    "showdown": "^1.9.1",
     "vue": "^2.6.12",
     "vue-cli": "^2.9.6"
   }
