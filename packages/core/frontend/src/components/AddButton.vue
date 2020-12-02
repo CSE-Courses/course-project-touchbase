@@ -164,7 +164,7 @@ interface CollectionTreeNode {
 }
 
 @Component({
-  components: {DatePicker},
+  components: { DatePicker },
 })
 export default class AddButton extends Vue {
   @Ref() resourceForm!: VForm;
