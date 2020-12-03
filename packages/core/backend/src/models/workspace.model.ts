@@ -10,12 +10,12 @@ import {
 // eslint-disable-next-line import/no-cycle
 import User from "./user.model";
 // eslint-disable-next-line import/no-cycle
-import Workspace from "./workspace.model";
+import Collection from "./collection.model";
 // eslint-disable-next-line import/no-cycle
 import Resource from "./resource.model";
 
 @Table
-export default class Collection extends Model implements Collection {
+export default class Workspace extends Model implements Workspace {
   @AllowNull(false)
   @Column
   name!: string;
@@ -28,26 +28,9 @@ export default class Collection extends Model implements Collection {
   @BelongsTo(() => User)
   owner!: User;
 
-  @ForeignKey(() => Collection)
-  @Column
-  collectionID?: number;
-
-  @BelongsTo(() => Collection, { onDelete: "CASCADE" })
-  parentCollection?: Collection;
-
   @HasMany(() => Resource)
   resources!: Resource[];
 
   @HasMany(() => Collection)
   collections!: Collection[];
-
-  // @AllowNull(false)
-  @ForeignKey(() => Workspace)
-  @Column
-  // workspaceID!: number;
-  workspaceID?: number;
-
-  @BelongsTo(() => Workspace)
-  // workspace!: Workspace;
-  workspace?: Workspace;
 }
