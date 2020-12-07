@@ -25,6 +25,11 @@ const routes: Array<RouteConfig> = [
         name: "Browse",
         component: () => import(/* webpackChunkName: "Browse" */ "@/views/lists/BrowseList.vue"),
       },
+      {
+        path: "/app/calendar",
+        name: "Calendar",
+        component: () => import(/* webpackChunkName: "Browse" */ "@/views/lists/CalendarList.vue"),
+      },
     ],
   },
   {
