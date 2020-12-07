@@ -29,7 +29,7 @@
       <v-list-item
         v-for="resource in resources"
         :key="`resource:${resource.name}`"
-        seleccomtable
+        selectable
         :to="`/app/resource/${resource.id}`"
       >
         <v-list-item-avatar>
