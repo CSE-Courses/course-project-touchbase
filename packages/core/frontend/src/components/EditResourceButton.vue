@@ -12,6 +12,8 @@
               @keydown.enter="updateResource"
             ></v-text-field>
             <DatePicker v-model="resourceDate"></DatePicker>
+            <TimePicker v-model="resourceStartTime" :hidden="resourceDate === ''"></TimePicker>
+            <TimePicker v-model="resourceEndTime" :hidden="resourceStartTime === ''"></TimePicker>
             <component
               :is="resourceFieldsComponent"
               v-if="resourceFieldsComponent"
@@ -49,10 +51,11 @@
 import { Vue, Component, Watch, Prop } from "vue-property-decorator";
 import api from "@/api";
 import DatePicker from "@/components/DatePicker.vue";
+import TimePicker from "@/components/TimePicker.vue";
 
 const resourceService = api.service("resources");
 @Component({
-  components: { DatePicker },
+  components: { DatePicker, TimePicker },
 })
 export default class EditResourceButton extends Vue {
   @Prop() id!: number;
@@ -67,6 +70,10 @@ export default class EditResourceButton extends Vue {
 
   resourceDate = "";
 
+  resourceStartTime = "";
+
+  resourceEndTime = "";
+
   resourceComponent: typeof Vue | null = null;
 
   resourceFieldsComponent: Vue | null = null;
@@ -80,6 +87,8 @@ export default class EditResourceButton extends Vue {
       name: this.resourceName,
       data: this.resourceData,
       date: this.resourceDate,
+      startTime: this.resourceStartTime,
+      endTime: this.resourceEndTime,
     });
     this.dialog = false;
     this.$root.$emit("resource-refresh-needed");
@@ -99,6 +108,8 @@ export default class EditResourceButton extends Vue {
     this.resourceData = resource.data;
     this.resourceType = resource.type;
     this.resourceDate = resource.date;
+    this.resourceStartTime = resource.startTime;
+    this.resourceEndTime = resource.endTime;
     this.resourceComponent = (await import(`../views/resources/${resource.type}`)).default;
     if (this.resourceType)
       try {

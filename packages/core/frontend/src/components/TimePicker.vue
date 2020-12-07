@@ -1,17 +1,17 @@
 <template>
   <div>
-    <v-menu offset-y :close-on-content-click="false" @input="$emit('date', resourceDate)">
+    <v-menu offset-y :close-on-content-click="false" @input="$emit('time', resourceTime)">
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>mdi-calendar</v-icon>
+          <v-icon>mdi-clock</v-icon>
         </v-btn>
-        {{ resourceDate }}
+        {{ resourceTime }}
       </template>
       <v-card>
-        <v-date-picker v-model="resourceDate"></v-date-picker>
+        <v-time-picker v-model="resourceTime" format="24hr"></v-time-picker>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="error" @click="resourceDate = ''">clear</v-btn>
+          <v-btn text color="error" @click="resourceTime = ''">clear</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -25,9 +25,9 @@ import { Component, Model, Vue } from "vue-property-decorator";
   components: {},
 })
 export default class DatePicker extends Vue {
-  @Model() date!: "";
+  @Model() time!: "";
 
-  resourceDate = this.date;
+  resourceTime = this.time;
 
   menu = false;
 }

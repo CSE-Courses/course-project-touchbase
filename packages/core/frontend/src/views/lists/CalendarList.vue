@@ -64,9 +64,9 @@ const resourceService = api.service("resources");
 export default class BrowseList extends Vue {
   @Ref() calendar!: VCalendar;
 
-  resources: { name: string; date: string; id: string }[] = [];
+  resources: { name: string; date: string; startTime: string; endTime: string; id: string }[] = [];
 
-  events: { name: string; start: string; id: string }[] = [];
+  events: { name: string; start: string; end: string; id: string }[] = [];
 
   type = "month";
 
@@ -114,9 +114,12 @@ export default class BrowseList extends Vue {
     this.events = [];
     for (let i = 0; i < this.resources.length; i += 1) {
       const item = this.resources[i];
+      const start = ` ${item.startTime}`;
+      const end = ` ${item.endTime}`;
       this.events.push({
         name: item.name,
-        start: item.date,
+        start: item.date + start,
+        end: item.date + end,
         id: item.id,
       });
     }
