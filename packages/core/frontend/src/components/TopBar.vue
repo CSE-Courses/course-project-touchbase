@@ -41,20 +41,21 @@ export default class TopBar extends Vue {
   searchinput = "";
 
   async search(): Promise<void> {
-    const collectiontest = this.collections.find(
-      (collection) => collection.name === this.searchinput
-    )?.id;
-    const resourcetest = this.resources.find((resource) => resource.name === this.searchinput)?.id;
-    if (resourcetest != null) {
-      await this.$router.push(`/app/resource/${resourcetest}`);
-    } else if (collectiontest != null) {
+    const index = this.searchinput.indexOf("(");
+    const search = this.searchinput.slice(0, index - 1);
+    const type = this.searchinput.slice(index + 1, this.searchinput.length - 1);
+    const collectiontest = this.collections.find((collection) => collection.name === search)?.id;
+    const resourcetest = this.resources.find((resource) => resource.name === search && resource.type === type)?.id;
+    if (collectiontest != null && type === "Collection") {
       await this.$router.push(`/app/browse/${collectiontest}`);
+    } else if (resourcetest != null && type !== "Collection") {
+      await this.$router.push(`/app/resource/${resourcetest}`);
     }
   }
 
   collections: { name: string; id: number }[] = [];
 
-  resources: { name: string; id: number }[] = [];
+  resources: { name: string; id: number; type: string }[] = [];
 
   collectionstrings: string[] = [];
 
@@ -70,7 +71,7 @@ export default class TopBar extends Vue {
         },
       })
     ).data;
-    this.collectionstrings = this.collections.map((collection) => collection.name);
+    this.collectionstrings = this.collections.map((collection) => `${collection.name} (Collection)`);
   }
 
   async pullResources(): Promise<void> {
@@ -83,7 +84,7 @@ export default class TopBar extends Vue {
         },
       })
     ).data;
-    this.resourcestrings = this.resources.map((resource) => resource.name);
+    this.resourcestrings = this.resources.map((resource) => `${resource.name} (${resource.type})`);
   }
 
   mounted(): void {
