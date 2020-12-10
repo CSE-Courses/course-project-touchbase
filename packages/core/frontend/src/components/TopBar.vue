@@ -45,11 +45,22 @@ export default class TopBar extends Vue {
     const search = this.searchinput.slice(0, index - 1);
     const type = this.searchinput.slice(index + 1, this.searchinput.length - 1);
     const collectiontest = this.collections.find((collection) => collection.name === search)?.id;
-    const resourcetest = this.resources.find((resource) => resource.name === search && resource.type === type)?.id;
+    const resourcetest = this.resources.find(
+      (resource) => resource.name === search && resource.type === type
+    )?.id;
     if (collectiontest != null && type === "Collection") {
-      await this.$router.push(`/app/browse/${collectiontest}`);
+      await this.$router.push({
+        name: "Browse",
+        params: {
+          workspace: this.$route.params.workspace,
+          collectionID: collectiontest.toString(),
+        },
+      });
     } else if (resourcetest != null && type !== "Collection") {
-      await this.$router.push(`/app/resource/${resourcetest}`);
+      await this.$router.push({
+        name: "Resource",
+        params: { workspace: this.$route.params.workspace, collectionID: resourcetest.toString() },
+      });
     }
   }
 
@@ -71,7 +82,9 @@ export default class TopBar extends Vue {
         },
       })
     ).data;
-    this.collectionstrings = this.collections.map((collection) => `${collection.name} (Collection)`);
+    this.collectionstrings = this.collections.map(
+      (collection) => `${collection.name} (Collection)`
+    );
   }
 
   async pullResources(): Promise<void> {

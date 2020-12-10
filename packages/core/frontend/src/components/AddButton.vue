@@ -253,6 +253,7 @@ export default class AddButton extends Vue {
       date: this.resourceDate,
       ownerID: userID.user.id,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
+      workspaceID: this.$route.params.workspaceID,
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
@@ -266,6 +267,7 @@ export default class AddButton extends Vue {
     await collectionsService.create({
       name: this.collectionName,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
+      workspaceID: this.$route.params.workspaceID,
     });
     this.collectionForm.reset();
     this.$root.$emit("collection-refresh-needed");

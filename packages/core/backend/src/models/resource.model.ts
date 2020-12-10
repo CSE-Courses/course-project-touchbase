@@ -37,13 +37,11 @@ export default class Resource extends Model implements Resource {
   @BelongsTo(() => Collection, { onDelete: "CASCADE" })
   collection!: Collection;
 
-  // @AllowNull(false)
+  @AllowNull(false)
   @ForeignKey(() => Workspace)
   @Column
-  // workspaceID!: number;
-  workspaceID?: number;
+  workspaceID!: number;
 
   @BelongsTo(() => Workspace)
-  // workspace!: Workspace;
-  workspace?: Workspace;
+  workspace!: Workspace;
 }

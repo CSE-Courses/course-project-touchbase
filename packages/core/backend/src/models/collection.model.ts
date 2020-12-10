@@ -41,13 +41,11 @@ export default class Collection extends Model implements Collection {
   @HasMany(() => Collection)
   collections!: Collection[];
 
-  // @AllowNull(false)
+  @AllowNull(false)
   @ForeignKey(() => Workspace)
   @Column
-  // workspaceID!: number;
-  workspaceID?: number;
+  workspaceID!: number;
 
   @BelongsTo(() => Workspace)
-  // workspace!: Workspace;
-  workspace?: Workspace;
+  workspace!: Workspace;
 }

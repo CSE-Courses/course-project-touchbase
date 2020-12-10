@@ -15,7 +15,7 @@ declare module "@/declarations" {
 
 export default function configureCollections(app: Application): void {
   const options = {
-    Model: Collection,
+    Model: Workspace,
     paginate: app.get("paginate"),
   };
 
