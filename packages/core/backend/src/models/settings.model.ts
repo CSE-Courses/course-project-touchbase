@@ -5,10 +5,11 @@ import {
   AllowNull,
   ForeignKey,
   BelongsTo,
-  HasMany,
+  HasOne,
 } from "sequelize-typescript";
 // eslint-disable-next-line import/no-cycle
 import User from "./user.model";
+import Workspace from "./workspace.model";
 
 @Table
 export default class Setting extends Model implements Setting {
@@ -21,8 +22,16 @@ export default class Setting extends Model implements Setting {
   owner!: User;
 
   @Column
-  darkmode!: boolean;
+  darkmode?: boolean;
 
   @Column
-  color!: string;
+  color?: string;
+
+  @AllowNull(false)
+  @ForeignKey(() => Workspace)
+  @Column
+  lastWorkspaceID!: number;
+
+  @BelongsTo(() => Workspace)
+  lastWorkspace!: Workspace;
 }

@@ -1,12 +1,8 @@
 <template>
   <div>
-    <b>User ID: </b>{{ uid }}<br>
-    <b>Email: </b>{{ email }}<br>
-    <v-btn
-      id="cpw"
-      depressed
-      color="primary"
-      @click="cpwdialog = !cpwdialog"
+    <b>User ID: </b>{{ uid }}<br />
+    <b>Email: </b>{{ email }}<br />
+    <v-btn id="cpw" depressed color="primary" @click="cpwdialog = !cpwdialog"
       >Change Password</v-btn
     >
     <v-dialog v-model="cpwdialog" max-width="400" persistent>

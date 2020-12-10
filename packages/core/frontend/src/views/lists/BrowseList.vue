@@ -7,7 +7,10 @@
       <v-list-item
         v-for="collection in collections"
         :key="`collection:${collection.name}`"
-        :to="`/app/browse/${collection.id}`"
+        :to="{
+          name: 'Browse',
+          params: { workspace: $route.params.workspace, collectionID: collection.id },
+        }"
       >
         <v-list-item-avatar>
           <v-icon class="grey lighten-1" dark>mdi-folder</v-icon>
@@ -30,7 +33,10 @@
         v-for="resource in resources"
         :key="`resource:${resource.name}`"
         selectable
-        :to="`/app/resource/${resource.id}`"
+        :to="{
+          name: 'Resource',
+          params: { workspace: $route.params.workspace, collectionID: resource.id },
+        }"
       >
         <v-list-item-avatar>
           <v-icon class="blue" dark>mdi-file-document</v-icon>
@@ -74,12 +80,10 @@ export default class BrowseList extends Vue {
 
   @Watch("$route")
   async pullCollections(): Promise<void> {
-    const authRes = await api.get("authentication");
-
     this.collections = (
       await collectionsService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
           collectionID: this.$route.params.collectionID || null,
         },
       })
@@ -88,12 +92,10 @@ export default class BrowseList extends Vue {
 
   @Watch("$route")
   async pullResources(): Promise<void> {
-    const authRes = await api.get("authentication");
-
     this.resources = (
       await resourceService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
           collectionID: this.$route.params.collectionID || null,
         },
       })
@@ -109,10 +111,17 @@ export default class BrowseList extends Vue {
     while (cid) {
       // eslint-disable-next-line no-await-in-loop
       const collection = await collectionsService.get(cid);
-      collectionPath.push({ text: collection.name, to: `/app/browse/${cid}` });
+      collectionPath.push({
+        text: collection.name,
+        to: `/workspace/${this.$route.params.workspace}/browse/${cid}`,
+      });
       cid = collection.collectionID;
     }
-    collectionPath.push({ text: "Home", to: "/app/browse", exact: true });
+    collectionPath.push({
+      text: "Home",
+      to: `/workspace/${this.$route.params.workspace}/browse`,
+      exact: true,
+    });
     this.collectionPath = collectionPath.reverse();
   }
 

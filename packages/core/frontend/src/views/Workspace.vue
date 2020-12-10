@@ -33,9 +33,11 @@ export default class extends Vue {
         ownerID: authRes.user.id,
       },
     });
-    if (settingsData.data.length > 0) {
-      const settings = settingsData.data[0];
+    const settings = settingsData.data[0];
+    if (settings.color) {
       this.$vuetify.theme.themes = JSON.parse(settings.color);
+    }
+    if (settings.darkmode != null) {
       this.$vuetify.theme.dark = settings.darkmode;
     }
   }

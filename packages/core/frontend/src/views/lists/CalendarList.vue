@@ -98,16 +98,15 @@ export default class BrowseList extends Vue {
 
   // eslint-disable-next-line
   openEvent(event: any): void {
-    router.push(`/app/resource/${event.event.id}`);
+    router.push(`/workspace/${this.$route.params.workspace}/resource/${event.event.id}`);
   }
 
   @Watch("$route")
   async pullResources(): Promise<void> {
-    const authRes = await api.get("authentication");
     this.resources = (
       await resourceService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
         },
       })
     ).data;

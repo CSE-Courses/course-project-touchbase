@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import api from "@/api";
 import SettingsButton from "./SettingsButton.vue";
 
@@ -45,11 +45,22 @@ export default class TopBar extends Vue {
     const search = this.searchinput.slice(0, index - 1);
     const type = this.searchinput.slice(index + 1, this.searchinput.length - 1);
     const collectiontest = this.collections.find((collection) => collection.name === search)?.id;
-    const resourcetest = this.resources.find((resource) => resource.name === search && resource.type === type)?.id;
+    const resourcetest = this.resources.find(
+      (resource) => resource.name === search && resource.type === type
+    )?.id;
     if (collectiontest != null && type === "Collection") {
-      await this.$router.push(`/app/browse/${collectiontest}`);
+      await this.$router.push({
+        name: "Browse",
+        params: {
+          workspace: this.$route.params.workspace,
+          collectionID: collectiontest.toString(),
+        },
+      });
     } else if (resourcetest != null && type !== "Collection") {
-      await this.$router.push(`/app/resource/${resourcetest}`);
+      await this.$router.push({
+        name: "Resource",
+        params: { workspace: this.$route.params.workspace, collectionID: resourcetest.toString() },
+      });
     }
   }
 
@@ -61,26 +72,32 @@ export default class TopBar extends Vue {
 
   resourcestrings: string[] = [];
 
+  @Watch("$route.params.workspace")
   async pullCollections(): Promise<void> {
-    const authRes = await api.get("authentication");
+    this.collections = [];
+    this.collectionstrings = [];
 
     this.collections = (
       await collectionsService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
         },
       })
     ).data;
-    this.collectionstrings = this.collections.map((collection) => `${collection.name} (Collection)`);
+    this.collectionstrings = this.collections.map(
+      (collection) => `${collection.name} (Collection)`
+    );
   }
 
+  @Watch("$rout.params.workspace")
   async pullResources(): Promise<void> {
-    const authRes = await api.get("authentication");
+    this.resources = [];
+    this.resourcestrings = [];
 
     this.resources = (
       await resourceService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
         },
       })
     ).data;

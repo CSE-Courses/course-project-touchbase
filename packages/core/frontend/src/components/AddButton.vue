@@ -227,7 +227,7 @@ export default class AddButton extends Vue {
     const collections: Omit<CollectionTreeNode, "children">[] = (
       await collectionsService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
           collectionID: parentID,
         },
       })
@@ -262,6 +262,7 @@ export default class AddButton extends Vue {
       endTime: this.resourceEndTime,
       ownerID: userID.user.id,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
+      workspaceID: this.$route.params.workspace,
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
@@ -275,6 +276,7 @@ export default class AddButton extends Vue {
     await collectionsService.create({
       name: this.collectionName,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
+      workspaceID: this.$route.params.workspace,
     });
     this.collectionForm.reset();
     this.$root.$emit("collection-refresh-needed");
