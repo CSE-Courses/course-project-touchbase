@@ -57,6 +57,13 @@ import EditCollectionButton from "@/components/EditCollectionButton.vue";
 import router from "@/router";
 import { VCalendar } from "vuetify/lib";
 
+interface CalEvent {
+  name: string;
+  id: string;
+  start: string;
+  end?: string;
+}
+
 const resourceService = api.service("resources");
 @Component({
   components: { EditCollectionButton, EditResourceButton },
@@ -64,9 +71,15 @@ const resourceService = api.service("resources");
 export default class BrowseList extends Vue {
   @Ref() calendar!: VCalendar;
 
-  resources: { name: string; date: string; startTime: string; endTime: string; id: string }[] = [];
+  resources: {
+    name: string;
+    date?: string;
+    startTime?: string;
+    endTime?: string;
+    id: string;
+  }[] = [];
 
-  events: { name: string; start: string; end: string; id: string }[] = [];
+  events: CalEvent[] = [];
 
   type = "month";
 
@@ -113,14 +126,17 @@ export default class BrowseList extends Vue {
     this.events = [];
     for (let i = 0; i < this.resources.length; i += 1) {
       const item = this.resources[i];
+      // eslint-disable-next-line no-continue
+      if (!item.date) continue;
       const start = ` ${item.startTime}`;
       const end = ` ${item.endTime}`;
-      this.events.push({
+      const calevent: CalEvent = {
         name: item.name,
-        start: item.date + start,
-        end: item.date + end,
         id: item.id,
-      });
+        start: item.startTime ? item.date + start : item.date,
+      };
+      if (item.endTime) calevent.end = item.date + end;
+      this.events.push(calevent);
     }
   }
 

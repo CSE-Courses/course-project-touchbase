@@ -56,11 +56,13 @@ export default class TopBar extends Vue {
           collectionID: collectiontest.toString(),
         },
       });
+      this.searchinput = '';
     } else if (resourcetest != null && type !== "Collection") {
       await this.$router.push({
         name: "Resource",
-        params: { workspace: this.$route.params.workspace, collectionID: resourcetest.toString() },
+        params: { workspace: this.$route.params.workspace, id: resourcetest.toString() },
       });
+      this.searchinput = '';
     }
   }
 
@@ -89,7 +91,7 @@ export default class TopBar extends Vue {
     );
   }
 
-  @Watch("$rout.params.workspace")
+  @Watch("$route.params.workspace")
   async pullResources(): Promise<void> {
     this.resources = [];
     this.resourcestrings = [];
