@@ -153,6 +153,7 @@ import { Component, Ref, Vue, Watch } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "@/api";
 import { VForm } from "vuetify/lib";
+// eslint-disable-next-line import/no-unresolved
 import DatePicker from "@/components/DatePicker.vue";
 import TimePicker from "@/components/TimePicker.vue";
 
@@ -186,7 +187,7 @@ export default class AddButton extends Vue {
 
   resourceName = "";
 
-  resourceTypes = ["Hyperlink", "ToDoList"];
+  resourceTypes = ["Hyperlink", "ToDoList", "Markdown"];
 
   resourceType = "";
 
