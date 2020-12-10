@@ -101,7 +101,6 @@ const workspacesService = api.service("workspaces");
 
 @Component
 export default class Sidebar extends Vue {
-  
   @Ref() workspaceForm!: VForm;
 
   toggle: boolean | null = null;
@@ -143,8 +142,8 @@ export default class Sidebar extends Vue {
 
   mounted(): void {
     this.refreshWorkspaces();
-    this.$root.$on('toggle-sidebar', () => {
-      this.toggle = !this.toggle
+    this.$root.$on("toggle-sidebar", () => {
+      this.toggle = !this.toggle;
     });
   }
 }
