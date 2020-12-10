@@ -7,17 +7,20 @@ describe("'resources' service", () => {
     password: "supersecret",
   };
   let userID = -1;
-  let collectionID = -1;
+  let workspaceID = -1;
 
   beforeEach(async () => {
     const user = await app.service("users").create(userInfo);
     userID = user.id;
 
-    const collection = await app.service("collections").create({
-      name: "All my thingamabobs",
-      ownerID: userID,
-    });
-    collectionID = collection.id;
+    const settings = await app
+      .service("settings")
+      .find({ query: { ownerID: userID }, paginate: false });
+    expect(Array.isArray(settings));
+
+    if (Array.isArray(settings)) {
+      workspaceID = settings[0].lastWorkspaceID;
+    }
   });
 
   it("registered the service", () => {
@@ -32,7 +35,7 @@ describe("'resources' service", () => {
       name: rescName,
       type: "Hyperlink",
       ownerID: userID,
-      collectionID,
+      workspaceID,
     });
 
     const res = await app.service("resources").find({
@@ -50,6 +53,7 @@ describe("'resources' service", () => {
         name: "electric boogaloo",
         type: "Hyperlink",
         ownerID: userID,
+        workspaceID,
       },
       {}
     );

@@ -6,8 +6,19 @@ const userInfo = {
   password: "supersecret",
 };
 
+let workspaceID = -1;
+
 beforeEach(async () => {
-  await app.service("users").create(userInfo);
+  const user = await app.service("users").create(userInfo);
+
+  const settings = await app
+    .service("settings")
+    .find({ query: { ownerID: user.id }, paginate: false });
+  expect(Array.isArray(settings));
+
+  if (Array.isArray(settings)) {
+    workspaceID = settings[0].lastWorkspaceID;
+  }
 });
 
 describe("'collections' service", () => {
@@ -31,6 +42,7 @@ it("creates and fetches collections for a user", async () => {
       strategy: "local",
       name: "D&D stuff",
       ownerID: user.id,
+      workspaceID,
     },
     {}
   );
@@ -68,6 +80,7 @@ it("doesn't allow another user to access", async () => {
       strategy: "local",
       name: "electric boogaloo",
       ownerID: user.id,
+      workspaceID,
     },
     {}
   );
