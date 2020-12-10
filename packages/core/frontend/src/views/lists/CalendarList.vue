@@ -103,11 +103,10 @@ export default class BrowseList extends Vue {
 
   @Watch("$route")
   async pullResources(): Promise<void> {
-    const authRes = await api.get("authentication");
     this.resources = (
       await resourceService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
         },
       })
     ).data;

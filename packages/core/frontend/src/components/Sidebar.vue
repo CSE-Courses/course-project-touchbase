@@ -17,11 +17,50 @@
             <v-list-item-title>{{ defaultWorkspaceName }}</v-list-item-title>
           </template>
 
-          <v-list-item v-for="workspace in workspaces" :key="workspace.id" link>
-            <v-list-item-title :to="{ name: 'Browse', params: { workspace: workspace.id } }">
+          <v-list-item
+            v-for="workspace in workspaces"
+            :key="workspace.id"
+            :to="{ name: 'Browse', params: { workspace: workspace.id } }"
+            link
+          >
+            <v-list-item-title>
               {{ workspace.name }}
             </v-list-item-title>
           </v-list-item>
+
+          <v-list-item link @click="showWorkspaceDialog = true">
+            <v-list-item-icon>
+              <v-icon>mdi-plus-circle</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>New</v-list-item-title>
+          </v-list-item>
+
+          <v-dialog v-model="showWorkspaceDialog" max-width="500px">
+            <v-card>
+              <v-form ref="workspaceForm">
+                <v-card-text>
+                  <v-text-field
+                    v-model="workspaceName"
+                    label="Workspace name"
+                    :rules="[(val) => !!val || 'Workspace name is required']"
+                    @keydown.enter="submitWorkspace"
+                  ></v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn
+                    depressed
+                    color="primary"
+                    :disabled="workspaceName === ''"
+                    @click="submitWorkspace"
+                  >
+                    Submit
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card>
+          </v-dialog>
         </v-list-group>
       </v-list>
 
@@ -55,7 +94,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Ref } from "vue-property-decorator";
+import { VForm } from "vuetify/lib";
 import api from "../api";
 
 const workspacesService = api.service("workspaces");
@@ -64,15 +104,34 @@ const workspacesService = api.service("workspaces");
 export default class Sidebar extends Vue {
   @Prop() toggle!: boolean;
 
+  @Ref() workspaceForm!: VForm;
+
   workspaces: { name: string; id: number }[] = [];
 
-  get defaultWorkspaceName() {
+  showWorkspaceDialog = false;
+
+  workspaceName = "";
+
+  async submitWorkspace(): Promise<void> {
+    if (!this.workspaceForm.validate()) return;
+    const authRes = await api.get("authentication");
+    const workspace = await workspacesService.create({
+      ownerID: authRes.user.id,
+      name: this.workspaceName,
+    });
+    this.workspaceForm.reset();
+    this.refreshWorkspaces();
+    this.showWorkspaceDialog = false;
+    this.$router.push({ name: "Browse", params: { workspace: workspace.id } });
+  }
+
+  get defaultWorkspaceName(): string {
     return this.workspaces.find(
-      (workspace) => workspace.id.toString() === this.$route.params.workspace
+      (workspace) => workspace.id.toString() === this.$route.params.workspace.toString()
     )?.name;
   }
 
-  async refreshWorkspaces() {
+  async refreshWorkspaces(): Promise<void> {
     const authRes = await api.get("authentication");
     const workspacesData = await workspacesService.find({
       query: {
@@ -82,7 +141,7 @@ export default class Sidebar extends Vue {
     this.workspaces = workspacesData.data;
   }
 
-  mounted() {
+  mounted(): void {
     this.refreshWorkspaces();
   }
 }

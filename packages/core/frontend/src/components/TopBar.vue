@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import api from "@/api";
 import SettingsButton from "./SettingsButton.vue";
 
@@ -72,13 +72,15 @@ export default class TopBar extends Vue {
 
   resourcestrings: string[] = [];
 
+  @Watch("$route.params.workspace")
   async pullCollections(): Promise<void> {
-    const authRes = await api.get("authentication");
+    this.collections = [];
+    this.collectionstrings = [];
 
     this.collections = (
       await collectionsService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
         },
       })
     ).data;
@@ -87,13 +89,15 @@ export default class TopBar extends Vue {
     );
   }
 
+  @Watch("$rout.params.workspace")
   async pullResources(): Promise<void> {
-    const authRes = await api.get("authentication");
+    this.resources = [];
+    this.resourcestrings = [];
 
     this.resources = (
       await resourceService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
         },
       })
     ).data;
