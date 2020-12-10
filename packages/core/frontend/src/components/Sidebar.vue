@@ -125,7 +125,7 @@ export default class Sidebar extends Vue {
     this.$router.push({ name: "Browse", params: { workspace: workspace.id } });
   }
 
-  get defaultWorkspaceName(): string {
+  get defaultWorkspaceName(): string | undefined {
     return this.workspaces.find(
       (workspace) => workspace.id.toString() === this.$route.params.workspace.toString()
     )?.name;
