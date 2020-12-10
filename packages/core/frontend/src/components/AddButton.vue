@@ -107,6 +107,8 @@
               transition
             />
             <DatePicker v-model="resourceDate"></DatePicker>
+            <TimePicker v-model="resourceStartTime" :hidden="resourceDate === ''"></TimePicker>
+            <TimePicker v-model="resourceEndTime" :hidden="resourceStartTime === ''"></TimePicker>
             <v-select
               v-model="resourceType"
               label="Resource type"
@@ -153,6 +155,7 @@ import api from "@/api";
 import { VForm } from "vuetify/lib";
 // eslint-disable-next-line import/no-unresolved
 import DatePicker from "@/components/DatePicker.vue";
+import TimePicker from "@/components/TimePicker.vue";
 
 const collectionsService = api.service("collections");
 
@@ -165,7 +168,7 @@ interface CollectionTreeNode {
 }
 
 @Component({
-  components: { DatePicker },
+  components: { TimePicker, DatePicker },
 })
 export default class AddButton extends Vue {
   @Ref() resourceForm!: VForm;
@@ -191,6 +194,10 @@ export default class AddButton extends Vue {
   resourceData = "";
 
   resourceDate = "";
+
+  resourceStartTime = "";
+
+  resourceEndTime = "";
 
   resourceFieldsComponent: Vue | null = null;
 
@@ -251,6 +258,8 @@ export default class AddButton extends Vue {
       type: this.resourceType,
       data: this.resourceData,
       date: this.resourceDate,
+      startTime: this.resourceStartTime,
+      endTime: this.resourceEndTime,
       ownerID: userID.user.id,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
     });

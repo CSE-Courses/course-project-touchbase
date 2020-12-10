@@ -20,6 +20,12 @@ export default class Resource extends Model implements Resource {
   @Column
   date?: string;
 
+  @Column
+  startTime?: string;
+
+  @Column
+  endTime?: string;
+
   @AllowNull(false)
   @ForeignKey(() => User)
   @Column
