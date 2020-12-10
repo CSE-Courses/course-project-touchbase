@@ -35,7 +35,7 @@
         selectable
         :to="{
           name: 'Resource',
-          params: { workspace: $route.params.workspace, collectionID: resource.id },
+          params: { workspace: $route.params.workspace, id: resource.id },
         }"
       >
         <v-list-item-avatar>
