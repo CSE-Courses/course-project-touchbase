@@ -17,11 +17,11 @@
             <v-list-item-title
               v-if="todo.checked"
               class="text-decoration-line-through text--disabled"
-            >{{ todo.title }}</v-list-item-title>
-            <v-list-item-title
-              v-else-if="!todo.checked"
-              class="text-decoration-none"
-            >{{ todo.title }}</v-list-item-title>
+              >{{ todo.title }}</v-list-item-title
+            >
+            <v-list-item-title v-else-if="!todo.checked" class="text-decoration-none">{{
+              todo.title
+            }}</v-list-item-title>
           </v-list-item-content>
         </template>
       </v-list-item>
