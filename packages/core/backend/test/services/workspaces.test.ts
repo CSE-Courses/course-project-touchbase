@@ -6,29 +6,18 @@ const userInfo = {
   password: "supersecret",
 };
 
-let workspaceID = -1;
-
 beforeEach(async () => {
-  const user = await app.service("users").create(userInfo);
-
-  const settings = await app
-    .service("settings")
-    .find({ query: { ownerID: user.id }, paginate: false });
-  expect(Array.isArray(settings));
-
-  if (Array.isArray(settings)) {
-    workspaceID = settings[0].lastWorkspaceID;
-  }
+  await app.service("users").create(userInfo);
 });
 
-describe("'collections' service", () => {
+describe("'workspaces' service", () => {
   it("registered the service", () => {
-    const service = app.service("collections");
+    const service = app.service("workspaces");
     expect(service).toBeTruthy();
   });
 });
 
-it("creates and fetches collections for a user", async () => {
+it("creates and fetches workspaces for a user", async () => {
   const { accessToken, user } = await app.service("authentication").create(
     {
       strategy: "local",
@@ -37,22 +26,21 @@ it("creates and fetches collections for a user", async () => {
     {}
   );
 
-  const idk = await app.service("collections").create(
+  const idk = await app.service("workspaces").create(
     {
       strategy: "local",
       name: "D&D stuff",
       ownerID: user.id,
-      workspaceID,
     },
     {}
   );
 
-  const testget = await app.service("collections").get(idk.id, {
+  const testget = await app.service("workspaces").get(idk.id, {
     provider: "rest",
     authentication: { strategy: "jwt", accessToken },
   });
 
-  const res = await app.service("collections").find({
+  const res = await app.service("workspaces").find({
     query: { name: "D&D stuff", $limit: 1 },
     paginate: false,
     provider: "rest",
@@ -75,12 +63,11 @@ it("doesn't allow another user to access", async () => {
     {}
   );
 
-  const idk = await app.service("collections").create(
+  const idk = await app.service("workspaces").create(
     {
       strategy: "local",
       name: "electric boogaloo",
       ownerID: user.id,
-      workspaceID,
     },
     {}
   );
@@ -101,7 +88,7 @@ it("doesn't allow another user to access", async () => {
   );
 
   expect(async () => {
-    const testget = await app.service("collections").get(idk.id, {
+    const testget = await app.service("workspaces").get(idk.id, {
       provider: "rest",
       authentication: { strategy: "jwt", accessToken },
     });

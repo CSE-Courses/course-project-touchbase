@@ -1,8 +1,10 @@
 import { Table, Column, Model, AllowNull, ForeignKey, BelongsTo } from "sequelize-typescript";
 // eslint-disable-next-line import/no-cycle
-import Collection from "./collection.model";
-// eslint-disable-next-line import/no-cycle
 import User from "./user.model";
+// eslint-disable-next-line import/no-cycle
+import Workspace from "./workspace.model";
+// eslint-disable-next-line import/no-cycle
+import Collection from "./collection.model";
 
 @Table
 export default class Resource extends Model implements Resource {
@@ -16,6 +18,15 @@ export default class Resource extends Model implements Resource {
 
   @Column
   data?: string;
+
+  @Column
+  date?: string;
+
+  @Column
+  startTime?: string;
+
+  @Column
+  endTime?: string;
 
   @AllowNull(false)
   @ForeignKey(() => User)
@@ -31,4 +42,12 @@ export default class Resource extends Model implements Resource {
 
   @BelongsTo(() => Collection, { onDelete: "CASCADE" })
   collection!: Collection;
+
+  @AllowNull(false)
+  @ForeignKey(() => Workspace)
+  @Column
+  workspaceID!: number;
+
+  @BelongsTo(() => Workspace)
+  workspace!: Workspace;
 }

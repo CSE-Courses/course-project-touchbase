@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <TopBar @toggle="toggle = !toggle"></TopBar>
-    <Sidebar :toggle="toggle"></Sidebar>
+    <TopBar></TopBar>
+    <Sidebar></Sidebar>
     <AddButton></AddButton>
     <v-main>
       <router-view />
@@ -24,8 +24,6 @@ const settingsService = api.service("settings");
   components: { TopBar, Sidebar, AddButton },
 })
 export default class extends Vue {
-  toggle = true;
-
   async pullSettings(): Promise<void> {
     const authRes = await api.get("authentication");
     const settingsData = await settingsService.find({
@@ -33,9 +31,11 @@ export default class extends Vue {
         ownerID: authRes.user.id,
       },
     });
-    if (settingsData.data.length > 0) {
-      const settings = settingsData.data[0];
+    const settings = settingsData.data[0];
+    if (settings.color) {
       this.$vuetify.theme.themes = JSON.parse(settings.color);
+    }
+    if (settings.darkmode != null) {
       this.$vuetify.theme.dark = settings.darkmode;
     }
   }

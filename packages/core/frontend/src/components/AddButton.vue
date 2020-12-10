@@ -106,6 +106,9 @@
               color="primary"
               transition
             />
+            <DatePicker v-model="resourceDate"></DatePicker>
+            <TimePicker v-model="resourceStartTime" :hidden="resourceDate === ''"></TimePicker>
+            <TimePicker v-model="resourceEndTime" :hidden="resourceStartTime === ''"></TimePicker>
             <v-select
               v-model="resourceType"
               label="Resource type"
@@ -150,6 +153,9 @@ import { Component, Ref, Vue, Watch } from "vue-property-decorator";
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import api from "@/api";
 import { VForm } from "vuetify/lib";
+// eslint-disable-next-line import/no-unresolved
+import DatePicker from "@/components/DatePicker.vue";
+import TimePicker from "@/components/TimePicker.vue";
 
 const collectionsService = api.service("collections");
 
@@ -162,7 +168,7 @@ interface CollectionTreeNode {
 }
 
 @Component({
-  components: {},
+  components: { TimePicker, DatePicker },
 })
 export default class AddButton extends Vue {
   @Ref() resourceForm!: VForm;
@@ -181,11 +187,17 @@ export default class AddButton extends Vue {
 
   resourceName = "";
 
-  resourceTypes = ["Hyperlink", "ToDoList"];
+  resourceTypes = ["Hyperlink", "ToDoList", "Markdown"];
 
   resourceType = "";
 
   resourceData = "";
+
+  resourceDate = "";
+
+  resourceStartTime = "";
+
+  resourceEndTime = "";
 
   resourceFieldsComponent: Vue | null = null;
 
@@ -215,7 +227,7 @@ export default class AddButton extends Vue {
     const collections: Omit<CollectionTreeNode, "children">[] = (
       await collectionsService.find({
         query: {
-          ownerID: authRes.user.id,
+          workspaceID: this.$route.params.workspace,
           collectionID: parentID,
         },
       })
@@ -240,14 +252,17 @@ export default class AddButton extends Vue {
 
   async submitResource(): Promise<void> {
     if (!this.resourceForm.validate()) return;
-
     const userID = await api.get("authentication");
     await resourceService.create({
       name: this.resourceName,
       type: this.resourceType,
       data: this.resourceData,
+      date: this.resourceDate,
+      startTime: this.resourceStartTime,
+      endTime: this.resourceEndTime,
       ownerID: userID.user.id,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
+      workspaceID: this.$route.params.workspace,
     });
     this.showResourceDialog = false;
     this.resourceForm.reset();
@@ -261,6 +276,7 @@ export default class AddButton extends Vue {
     await collectionsService.create({
       name: this.collectionName,
       collectionID: this.activeCollections.length ? this.activeCollections[0] : null,
+      workspaceID: this.$route.params.workspace,
     });
     this.collectionForm.reset();
     this.$root.$emit("collection-refresh-needed");

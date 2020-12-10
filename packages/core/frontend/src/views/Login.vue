@@ -89,7 +89,7 @@ export default class Login extends Vue {
       });
       this.loginSuccess = true;
       this.loginFail = false;
-      await this.$router.push("/app");
+      await this.$router.push("/workspace");
     } catch {
       this.loginFail = true;
     }

@@ -39,24 +39,19 @@ export default class ColorSettings extends Vue {
 
   async save(): Promise<void> {
     const user = await api.get("authentication");
-    const settingsData = await settingsService.find({
-      query: {
+    await settingsService.patch(
+      null,
+      {
+        darkmode: this.$vuetify.theme.dark,
+        color: JSON.stringify(this.$vuetify.theme.themes),
         ownerID: user.user.id,
       },
-    });
-    if (settingsData.data.length > 0) {
-      await settingsService.update(settingsData.data[0].id, {
-        darkmode: this.$vuetify.theme.dark,
-        color: JSON.stringify(this.$vuetify.theme.themes),
-        ownerID: user.user.id,
-      });
-    } else {
-      await settingsService.create({
-        darkmode: this.$vuetify.theme.dark,
-        color: JSON.stringify(this.$vuetify.theme.themes),
-        ownerID: user.user.id,
-      });
-    }
+      {
+        query: {
+          ownerID: user.user.id,
+        },
+      }
+    );
   }
 }
 </script>
