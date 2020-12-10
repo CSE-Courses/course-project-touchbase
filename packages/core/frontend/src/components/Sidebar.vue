@@ -4,12 +4,11 @@
       v-model="toggle"
       app
       color="secondary"
-      absolute
       dark
-      clipped
       transition
       open-on-click
       activatable
+      clipped
     >
       <v-list v-if="defaultWorkspaceName" color="secondary darken-3" class="workspace-switcher">
         <v-list-group prepend-icon="mdi-home-city">
@@ -102,9 +101,10 @@ const workspacesService = api.service("workspaces");
 
 @Component
 export default class Sidebar extends Vue {
-  @Prop() toggle!: boolean;
-
+  
   @Ref() workspaceForm!: VForm;
+
+  toggle: boolean | null = null;
 
   workspaces: { name: string; id: number }[] = [];
 
@@ -143,6 +143,9 @@ export default class Sidebar extends Vue {
 
   mounted(): void {
     this.refreshWorkspaces();
+    this.$root.$on('toggle-sidebar', () => {
+      this.toggle = !this.toggle
+    });
   }
 }
 </script>

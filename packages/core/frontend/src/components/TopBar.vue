@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar app color="primary" flat dark clipped-left clipped-right>
-      <v-btn icon @click="$emit('toggle')">
+      <v-btn icon @click="$root.$emit('toggle-sidebar')">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
 
